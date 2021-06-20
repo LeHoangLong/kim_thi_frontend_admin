@@ -1,0 +1,28 @@
+@import '../Common.scss';
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .login-form {
+        width: 80%;
+        max-width: 500px;
+        margin-top: 5rem;
+        margin-left: auto;
+        margin-right: auto;
+        display: flex;
+        flex-direction: column;
+
+        input {
+            @extend h4;
+            margin-bottom: $m4;
+            margin-top: $m4;
+            padding: $m1 $m3;
+        }
+
+        button {
+            margin-left: auto;
+        }
+    }
+
+}
