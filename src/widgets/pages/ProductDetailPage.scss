@@ -1,0 +1,23 @@
+@import '../Common.scss';
+
+main .product-detail-page {
+    h4 {
+        margin-top: $m2;
+    }
+    .title {
+        color: $primary-color;
+    }
+    article {
+        width: 100%;
+        padding-left: $m4;
+        padding-right: $m4;
+        max-width: 500px;
+        display: flex;
+        justify-content: flex-start;
+        flex-direction: column;
+    }
+}
+
+input {
+    @extend h5;
+}

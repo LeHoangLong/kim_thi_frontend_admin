@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Scaffold.scss";
 
 export interface ScaffoldProps {
-    children: JSX.Element;
+    children: JSX.Element[] | JSX.Element;
     sidebarMenus: string[];
     onMenuSelected(menu: string) : void;
     selectedMenu: number;
@@ -44,7 +44,7 @@ export const Scaffold = (props: ScaffoldProps) => {
         setShowBlackenLayer("none")
     }
 
-    return <section>
+    return <section className="scaffold">
         <header>
             <button className="icon-button" onClick={ onShowSidebarButtonClick }>
                 <i className="fas fa-bars"></i>

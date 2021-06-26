@@ -1,0 +1,12 @@
+@import '../Common.scss';
+
+.icon-button {
+    border-radius: 50%;
+    padding: $m3;
+    min-height: 48px;
+    min-width: 48px;
+    border: 0px transparent solid;
+    box-shadow: none;
+    padding: $m3;
+    background-color: transparent;
+}

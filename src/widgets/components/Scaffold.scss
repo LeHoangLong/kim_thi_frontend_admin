@@ -1,15 +1,16 @@
 @import '../Common.scss';
 
-section {
+.scaffold {
     position: relative;
     display: flex;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
     aside {
         position: absolute;
         top: 0px;
         right: 100%;
         height: 100vh;
+        box-sizing: border-box;
         transition: transform 0.5s ease-in-out;
         max-width: 80%;
         border-right: 1px solid $border-color;
@@ -37,23 +38,27 @@ section {
             color: $on-primary-color;
         }
     }
-}
 
+    header {
+        border-bottom: 1px solid $border-color;
+        i {
+            font-size: 1.5em;
+            margin: $m2;
+        }
+    }
 
-header {
-    border-bottom: 1px solid $border-color;
-}
+    main {
+        position: relative;    
+        flex-grow: 1;
+    }
 
-main {
-    position: relative;    
-    flex-grow: 1;
-}
+    .blacken-layer {
+        height: 100%;
+        width: 100%;
+        background-color: rgba($color: #000000, $alpha: 0.2);
+        position: fixed;
+        top: 0px;
+        left: 0px;
+    }
 
-.blacken-layer {
-    height: 100%;
-    width: 100%;
-    background-color: rgba($color: #000000, $alpha: 0.2);
-    position: fixed;
-    top: 0px;
-    left: 0px;
 }

@@ -3,6 +3,8 @@ h1,
 h2,
 h3,
 h4,
+h5,
+h6,
 p,
 ul[class],
 ol[class],
@@ -13,6 +15,11 @@ blockquote,
 dl,
 dd {
   margin: 0;
+  box-sizing: border-box;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 main {
@@ -69,25 +76,18 @@ $m6: 3em;
 }
 
 $border-color: rgba(0, 0, 0, 0.3);
+$danger-color: rgba(#FF0000, 0.5);
 
 .border {
     border: 1px solid $border-color;
 }
 
-$shadow-color: rgba(0, 0, 0, 0.2);
+$shadow-color: rgba(0, 0, 0, 0.4);
 button {
     padding: $m3 $m4;   
     border-radius: 10px;
     box-shadow: 2px 4px 4px $shadow-color;
     font-weight: 600;
-}
-
-.icon-button {
-    border: 0px transparent solid;
-    border-radius: 50%;
-    box-shadow: none;
-    padding: $m3;
-    background-color: transparent;
 }
 
 $primary-color: #004800;
@@ -97,4 +97,37 @@ $on-primary-color: white;
 .primary-button {
     background-color: $primary-color;
     color: white;
+}
+
+.loading-container {
+    height: 100%;
+    width: 100%;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.form-text-input {
+    border-radius: 5px;
+    border: 1px solid $border-color;
+    padding: $m1 $m3;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    label {
+        margin-top: $m4;
+    }
+    input {
+        margin-top: $m1;
+        margin-bottom: $m3;
+    }
+}
+
+.required-label::after {
+    content: "*";
+    color: $danger-color
 }

@@ -7,13 +7,11 @@ import './widgets/Common.scss';
 
 function App() {
   return (
-    <body>
-      <Provider store={ store }>
-        <LocatorInitializer>
-          <UserStateListener></UserStateListener>
-        </LocatorInitializer>
-      </Provider>
-    </body>
+    <Provider store={ store }>
+      <LocatorInitializer>
+        <UserStateListener></UserStateListener>
+      </LocatorInitializer>
+    </Provider>
   );
 }
 
