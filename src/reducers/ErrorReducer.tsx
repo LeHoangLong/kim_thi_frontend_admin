@@ -34,3 +34,6 @@ const slice = createSlice({
 
     }
 })
+
+export const { push, pop } = slice.actions
+export default slice.reducer

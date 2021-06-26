@@ -1,6 +1,8 @@
 @import '../Common.scss';
 
 main .product-detail-page {
+    display: flex;
+    flex-direction: column;
     h4 {
         margin-top: $m2;
     }
@@ -20,4 +22,19 @@ main .product-detail-page {
 
 input {
     @extend h5;
+}
+
+.add-image {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: $m3;
+    .add-image-button {
+        background-color: $primary-color-2;
+        color: $on-primary-color;
+        height: 100px;
+        width: 100px;
+        > * {
+            margin: auto;
+        }        
+    }
 }

@@ -1,0 +1,33 @@
+@import '../Common.scss';
+
+.upload-image-button {
+    background-color: $primary-color;
+    color: $on-primary-color;
+    > * {
+        margin: auto;
+    }
+}
+
+.image-gallery {
+    padding-left: $m3;
+    padding-right: $m3;
+    .title {
+        color: $primary-color;
+        margin-top: $m3;
+        margin-bottom: $m3;
+    }
+    .images {
+        display: flex;
+        flex-wrap: wrap;
+        > * {
+            flex-grow: 0;
+            flex-shrink: 0;
+            height: 100px;
+            width: 100px;
+            margin-left: $m4;
+            &:nth-child(1) {
+                margin-left: 0px;
+            }
+        }
+    }
+}

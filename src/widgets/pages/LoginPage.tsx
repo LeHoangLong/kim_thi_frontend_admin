@@ -27,7 +27,7 @@ export const LoginPage = () => {
         
     }
 
-    return <main>
+    return <main className="login-page">
         <form className="login-form">
             <label htmlFor="username">
                 <h4>

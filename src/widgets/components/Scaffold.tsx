@@ -53,7 +53,7 @@ export const Scaffold = (props: ScaffoldProps) => {
                 { props.title }
             </p>
         </header>
-        <aside style={{ transform: `translate(${sidebarTranslateX}%)` }}>
+        <aside className="side-bar" style={{ transform: `translate(${sidebarTranslateX}%)` }}>
             { displaySideBar() }
         </aside>
         <main>

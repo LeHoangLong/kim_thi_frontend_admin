@@ -1,12 +1,16 @@
 import { configureStore } from '@reduxjs/toolkit'
 import ProductSummaryReducer from './ProductSummaryReducer'
 import UserReducer from './UserReducer'
+import ImageReducer from './ImageReducer'
+import ErrorReducer from './ErrorReducer'
 // ...
 
 export const store = configureStore({
   reducer: {
     users: UserReducer,
     productSummaries: ProductSummaryReducer,
+    images: ImageReducer,
+    errors: ErrorReducer,
   }
 })
 

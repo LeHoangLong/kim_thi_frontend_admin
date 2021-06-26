@@ -4,14 +4,19 @@ import './FormNavigationBar.scss'
 export interface FormNavigationBarProps {
     onBackButtonPressed?() : void;
     onOkButtonPressed?(): void;
+    closeOrBack? : boolean
 }
 
 export const FormNavigationBar = (props: FormNavigationBarProps) => {
     return <div className="form-navigation-bar">
         {(() => {
             if (props.onBackButtonPressed !== undefined) {
+                let classStr = "fas fa-arrow-left";
+                if (props.closeOrBack === true) {
+                    classStr = "fas fa-times"
+                }
                 return <IconButton onClick={ props.onBackButtonPressed }>
-                    <i className="fas fa-arrow-left"></i>
+                    <i className={ classStr }></i>
                 </IconButton>
             } else {
                 return <div/>
@@ -19,7 +24,7 @@ export const FormNavigationBar = (props: FormNavigationBarProps) => {
         })()}
         {(() => {
             if (props.onOkButtonPressed !== undefined) {
-                return <IconButton onClick={ props.onOkButtonPressed }>
+                return <IconButton className="icon-button right-icon" onClick={ props.onOkButtonPressed }>
                     <i className="fas fa-check"></i>
                 </IconButton>
             } else {

@@ -17,6 +17,7 @@ export const ProductPage = () => {
     let [showProductDetailPage, setShowProductDetailPage] = useState(false)
 
     function onClick() {
+        console.log('on click')
         setShowProductDetailPage(true)
     }
 
