@@ -4,6 +4,7 @@ import './Modal.scss'
 
 export interface ModalProps {
     onClose?() : void,    
+    onOk?() : void,
     show: boolean,
     children: React.ReactNode
 }
@@ -20,7 +21,7 @@ export const Modal = ( props: ModalProps ) => {
         <div className="modal-blacken-layer" onClick={ props.onClose }></div>
         <main>
             <header>
-                <FormNavigationBar onBackButtonPressed={ props.onClose } closeOrBack={true}></FormNavigationBar>
+                <FormNavigationBar onOkButtonPressed={ props.onOk } onBackButtonPressed={ props.onClose } closeOrBack={true}></FormNavigationBar>
             </header>
             { props.children }
         </main>

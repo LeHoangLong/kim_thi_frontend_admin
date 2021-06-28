@@ -1,5 +1,5 @@
 export interface ProductSummaryModel {
-    id: number,
+    id: string,
     name: string,
     avatarId: string,
 }

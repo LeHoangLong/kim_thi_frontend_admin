@@ -12,7 +12,7 @@ export class RemoteImageRepository implements IImageRepository {
                 let imageJson = response.data[i]
                 ret.push({
                     id: imageJson['id'],
-                    path: imageJson['path'],
+                    path: HOST_URL + "/" + imageJson['path'],
                 })
             }
             return ret

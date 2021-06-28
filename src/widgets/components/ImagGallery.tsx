@@ -10,9 +10,11 @@ import Locator from "../../services/Locator"
 import { IconButton } from "./IconButton"
 import './ImageGallery.scss'
 import Loading from "./Loading"
+import { ImageModel } from "../../models/ImageModel"
 
 export interface ImageGalleryProps {
-
+    onImageClicked(image: ImageModel) : void;
+    selectedImages : ImageModel[];
 }
 
 export const ImageGallery = (props : ImageGalleryProps) => {
@@ -63,7 +65,10 @@ export const ImageGallery = (props : ImageGalleryProps) => {
             )
             for (let i = 0; i < images.length; i++) {
                 ret.push(
-                    <img alt={ images[i].path } key={ images[i].id } src={ images[i].path }></img>
+                    <div key={ images[i].id } className="image-container">
+                        <img onClick={() => props.onImageClicked(images[i]) } alt={ images[i].path } src={ images[i].path }></img>
+                        <input onChange={() => props.onImageClicked(images[i])} type="checkbox" checked={ props.selectedImages.includes(images[i]) }></input>
+                    </div>
                 )
             }
             return ret

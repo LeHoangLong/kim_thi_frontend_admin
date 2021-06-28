@@ -88,6 +88,7 @@ button {
     border-radius: 10px;
     box-shadow: 2px 4px 4px $shadow-color;
     font-weight: 600;
+    cursor: pointer;
 }
 
 $primary-color: #004800;
@@ -111,7 +112,7 @@ $on-primary-color: white;
 .form-text-input {
     border-radius: 5px;
     border: 1px solid $border-color;
-    padding: $m1 $m3;
+    padding: $m1 $m2;
 }
 
 form {
@@ -130,4 +131,10 @@ form {
 .required-label::after {
     content: "*";
     color: $danger-color
+}
+
+.card {
+    border-radius: 10px;
+    box-shadow: 2px 4px 4px $shadow-color;
+    background-color: #FFF6F6;
 }

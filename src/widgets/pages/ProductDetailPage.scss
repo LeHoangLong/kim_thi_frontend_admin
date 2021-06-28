@@ -3,6 +3,7 @@
 main .product-detail-page {
     display: flex;
     flex-direction: column;
+    align-items: center;
     h4 {
         margin-top: $m2;
     }
@@ -17,6 +18,60 @@ main .product-detail-page {
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
+    }
+
+    .add-unit-button {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: $m5;
+        > * {
+            margin-right: $m3;
+        }
+    }
+
+    .price-card {
+        @extend .card;
+        margin-top: $m4;
+    }
+}
+
+.display-price-form {
+    padding: $m4 $m3;
+    > * {
+        display: flex;
+        align-items: center;
+        flex-wrap: wrap;
+        > * {
+            flex: 1 1 0;
+            max-width: 100%; // for text input
+        }
+        margin-top: $m4;
+    }
+
+    label {
+        font-weight: bold;
+        margin-top: 0px;
+    }
+
+    input[type=text] {
+        @extend h6;
+        margin-top: $m2;
+    }
+
+    .add-price-level {
+        border: 0px transparent solid;
+        background-color: transparent;
+        box-shadow: none;
+        display: flex;
+        justify-content: start;
+        align-items: center;
+        padding: 0px;
+        > * {
+            flex-grow: 0;
+            color: rgba(#000000, 0.7);
+            margin-right: $m3;
+        }
     }
 }
 
@@ -36,5 +91,24 @@ input {
         > * {
             margin: auto;
         }        
+    }
+
+    .image-container {
+        position: relative;
+        height: 100px;
+        width: 100px;
+        margin-left: $m3;
+        img {
+            height: 100%;
+            width: 100%;
+        }
+        button {
+            position: absolute;
+            height: 20px;
+            width: 20px;
+            border-radius: 3px;
+            right: 0px;
+            top: 0px;
+        }
     }
 }
