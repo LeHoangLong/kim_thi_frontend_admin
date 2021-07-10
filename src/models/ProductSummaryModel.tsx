@@ -1,5 +1,8 @@
+import { ImageModel } from "./ImageModel";
+
 export interface ProductSummaryModel {
-    id: string,
+    id: number,
+    serialNumber: string,
     name: string,
-    avatarId: string,
+    avatar: ImageModel,
 }

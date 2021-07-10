@@ -1,10 +1,12 @@
+import { ImageModel } from "./ImageModel";
 import { ProductPrice } from "./ProductPrice";
 
-export interface ProductDetail {
-    id: string | null,
+export interface ProductDetailModel {
+    id: number | null,
+    serialNumber: string,
     defaultPrice: ProductPrice,
     alternativePrices: ProductPrice[],
     name: string,
-    avatarId: string,
+    avatar: ImageModel,
     rank: number
 }

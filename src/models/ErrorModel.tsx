@@ -5,7 +5,8 @@ export enum EErrorLevel {
 }
 
 export interface ErrorModel {
+    id?: string,
     message: string,
     level: EErrorLevel,
-    time: Date,
+    timeMs: number,
 }

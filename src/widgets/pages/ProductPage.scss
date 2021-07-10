@@ -1,3 +1,60 @@
+@import '../Common.scss';
+
 .product-page {
     position: relative;
+    .product-summaries {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-evenly;
+        list-style-type: none;
+        .product-summary {
+            @extend .card;
+            margin: $m4;
+            max-width: 15rem;
+            padding-left: 0px;
+            img {
+                width: 100%;
+                border-top-left-radius: 10px;
+                border-top-right-radius: 10px;
+            }
+            
+            .summary {
+                margin: $m3;
+                .summary-field {
+                    margin-top: $m3;
+                    display: flex;
+                    flex-wrap: wrap;
+                    > * {
+                        overflow-wrap: anywhere;
+                    }
+                    strong {
+                        padding-right: $m3;
+                    }
+                }
+            }
+        }
+    }
+
+    .product-page-numbers {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        margin-bottom: $m4;
+        
+        .not-selected-page,
+        .selected-page {
+            border: none;
+            box-shadow: none;
+            background-color: none;
+        }
+
+        .not-selected-page {
+            color: blue;
+            text-decoration: underline;
+        }
+
+        .selected-page {
+            color: black;
+        }
+    }
 }

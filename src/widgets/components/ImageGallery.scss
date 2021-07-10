@@ -14,7 +14,7 @@
     .title {
         color: $primary-color;
         margin-top: $m3;
-        margin-bottom: $m3;
+        margin-bottom: 0px;
     }
     .images {
         display: flex;
@@ -24,10 +24,8 @@
             flex-shrink: 0;
             height: 100px;
             width: 100px;
-            margin-left: $m4;
-            &:nth-child(1) {
-                margin-left: 0px;
-            }
+            margin-top: $m4;
+            margin-right: $m4;
         }
 
         .image-container {

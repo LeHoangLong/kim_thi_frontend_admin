@@ -1,0 +1,27 @@
+@import '../Common.scss';
+
+.error-modal {
+    .error {
+        color: red;
+    }
+
+    .warning {
+        color: yellow;
+    }
+
+    .info {
+        color: blue;
+    }
+
+    padding-left: $m4;
+    padding-right: $m4;
+    
+    header {
+        display: flex;
+        align-items: center;
+        margin-bottom: $m5;
+        > * {
+            margin-right: $m4;
+        }
+    }
+}

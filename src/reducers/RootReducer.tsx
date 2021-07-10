@@ -3,6 +3,7 @@ import ProductSummaryReducer from './ProductSummaryReducer'
 import UserReducer from './UserReducer'
 import ImageReducer from './ImageReducer'
 import ErrorReducer from './ErrorReducer'
+import ProductDetailReducer from './ProductDetailReducer'
 // ...
 
 export const store = configureStore({
@@ -11,6 +12,7 @@ export const store = configureStore({
     productSummaries: ProductSummaryReducer,
     images: ImageReducer,
     errors: ErrorReducer,
+    productDetails: ProductDetailReducer,
   }
 })
 

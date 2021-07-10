@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { HOST_URL } from "../config/Url";
+import { NotFound } from "../exceptions/NotFound";
 import { ImageModel } from "../models/ImageModel";
 import { IImageRepository } from "./IImageRepository";
 
@@ -50,4 +51,20 @@ export class RemoteImageRepository implements IImageRepository {
         }
     }
 
+    async fetchImageById(imageId: string) : Promise<ImageModel> {
+        try {
+            let response = await axios.get(`${HOST_URL}/images/${imageId}`)
+            let imageJson = response.data
+            return {
+                id: imageJson['id'],
+                path: HOST_URL + "/" + imageJson['path'],
+            }
+        } catch (exception) {
+            let axioException = exception as AxiosError
+            if (axioException.response?.status === 404) {
+                throw new NotFound("ImageModel", "id", imageId)
+            }
+            throw axioException.response?.statusText;
+        }
+    }
 }

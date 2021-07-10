@@ -3,10 +3,11 @@ import { FormNavigationBar } from "./FormNavigationbar"
 import './Modal.scss'
 
 export interface ModalProps {
-    onClose?() : void,    
+    onClose() : void,    
     onOk?() : void,
     show: boolean,
-    children: React.ReactNode
+    children: React.ReactNode,
+    zIndex?: number,
 }
 
 export const Modal = ( props: ModalProps ) => {
@@ -17,9 +18,11 @@ export const Modal = ( props: ModalProps ) => {
         classStr += "modal-hide "
     }
 
-    return <section className={ classStr }>
+    let zIndex : number = props.zIndex ?? 200
+
+    return <section className={ classStr } style={{ zIndex: zIndex }}>
         <div className="modal-blacken-layer" onClick={ props.onClose }></div>
-        <main>
+        <main style={{ zIndex: zIndex + 1  }}>
             <header>
                 <FormNavigationBar onOkButtonPressed={ props.onOk } onBackButtonPressed={ props.onClose } closeOrBack={true}></FormNavigationBar>
             </header>

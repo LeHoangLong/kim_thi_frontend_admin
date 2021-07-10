@@ -1,11 +1,12 @@
 @import '../Common.scss';
 
-section .modal {
+.modal {
     position: fixed;
     width: 100vw;
     height: 100vh;
-    z-index: 1000;
     top: 0px;
+    justify-content: center;
+    align-items: center;
     main {
         background-color: white;
         border-radius: 10px;

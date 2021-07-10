@@ -9,6 +9,7 @@ export interface PriceLevel {
 
 export interface ProductPrice {
     unit: string,
+    isDefault: boolean,
     defaultPrice: number,
     priceLevels: PriceLevel[],
 }

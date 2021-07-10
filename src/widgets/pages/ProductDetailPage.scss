@@ -4,6 +4,9 @@ main .product-detail-page {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    overflow: scroll;
+
     h4 {
         margin-top: $m2;
     }
@@ -14,7 +17,7 @@ main .product-detail-page {
         width: 100%;
         padding-left: $m4;
         padding-right: $m4;
-        max-width: 500px;
+        max-width: 800px;
         display: flex;
         justify-content: flex-start;
         flex-direction: column;
@@ -33,6 +36,24 @@ main .product-detail-page {
     .price-card {
         @extend .card;
         margin-top: $m4;
+        .remove-price-button-container {
+            display: flex;
+            justify-content: end;
+        }
+    }
+
+    .select-avatar {
+        margin-top: $m3;
+        margin-bottom: $m4;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        img {
+            margin: 0px $m2;
+            height: 50px;
+            width: 50px;
+        }
     }
 }
 
@@ -42,11 +63,13 @@ main .product-detail-page {
         display: flex;
         align-items: center;
         flex-wrap: wrap;
+        margin-top: $m3;
+        margin-bottom: $m3;
         > * {
             flex: 1 1 0;
+            margin-bottom: $m2;
             max-width: 100%; // for text input
         }
-        margin-top: $m4;
     }
 
     label {
@@ -54,9 +77,17 @@ main .product-detail-page {
         margin-top: 0px;
     }
 
+    select {
+        @extend h6;
+        padding-left: $m3;
+    }
+
     input[type=text] {
         @extend h6;
-        margin-top: $m2;
+    }
+
+    input[type=checkbox] {
+        text-align: start;
     }
 
     .add-price-level {
@@ -71,6 +102,27 @@ main .product-detail-page {
             flex-grow: 0;
             color: rgba(#000000, 0.7);
             margin-right: $m3;
+        }
+    }
+
+    .display-price-levels {
+        display: block;
+        > * {
+            display: flex;
+            align-items: center;
+            margin-top: $m3;
+            margin-bottom: $m3;
+            > * {
+                flex: 1 1 0;
+            }
+        }
+        button {
+            flex-grow: 0;
+            width: 30px;
+        }
+        .dummy {
+            @extend button;
+            visibility: hidden;
         }
     }
 }
@@ -110,5 +162,13 @@ input {
             right: 0px;
             top: 0px;
         }
+    }
+}
+
+.price-level-form {
+    padding: $m4 $m3;
+    label {
+        font-weight: bold;
+        margin-top: 0px;
     }
 }
