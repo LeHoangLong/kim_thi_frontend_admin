@@ -1,4 +1,5 @@
 import { ImageModel } from "./ImageModel";
+import { ProductCategoryModel } from "./ProductCategoryModel";
 import { ProductPrice } from "./ProductPrice";
 
 export interface ProductDetailModel {
@@ -8,5 +9,6 @@ export interface ProductDetailModel {
     alternativePrices: ProductPrice[],
     name: string,
     avatar: ImageModel,
-    rank: number
+    rank: number,
+    categories: ProductCategoryModel[]
 }

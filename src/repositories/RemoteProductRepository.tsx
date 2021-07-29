@@ -1,5 +1,6 @@
 import axios, { AxiosError } from "axios";
 import { HOST_URL } from "../config/Url";
+import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
 import { EPriceUnit, ProductPrice } from "../models/ProductPrice";
 import { ProductSummaryModel } from "../models/ProductSummaryModel";
@@ -55,11 +56,21 @@ export class RemoteProductRepository implements IProductRepository {
         }
     }
 
+    private jsonToCategory(json: any) : ProductCategoryModel {
+        return {
+            category: json['category']
+        }
+    }
+
     jsonToProductDetail(json: any) : ProductDetailModel {
         let defaultPrice = json.prices.find((e: any) => e.isDefault)
         let alternativePrices = json.prices.filter((e: any) => !e.isDefault)
+        let categories : ProductCategoryModel[] = []
+        for (let i = 0; i < json.categories.length; i++) {
+            categories.push(this.jsonToCategory(json.categories[i]))
+        }
 
-        return {
+        let productDetail = {
             id: json.product.id,
             serialNumber: json.product.serialNumber,
             defaultPrice: defaultPrice,
@@ -69,8 +80,11 @@ export class RemoteProductRepository implements IProductRepository {
                 ...json.avatar,
                 path: HOST_URL + "/" + json.avatar.path,
             },
-            rank: json.product.rank
+            rank: json.product.rank,
+            categories: categories,
         }
+
+        return productDetail
     }
 
     async fetchProductDetailById(productId: number) : Promise<ProductDetailModel> {

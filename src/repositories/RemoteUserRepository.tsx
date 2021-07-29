@@ -5,7 +5,6 @@ import { IUserRepository, IUserRepositoryErrorAuthenticationFailed } from "./IUs
 
 export class RemoteUserRepository implements IUserRepository {
     async logIn(username: string, password: string): Promise<UserModel> {
-        console.log('logging in');
         try {
             await axios.post(`${HOST_URL}/user/login/`, {
                 'username': username,

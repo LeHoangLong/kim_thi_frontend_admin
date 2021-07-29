@@ -18,6 +18,10 @@ dd {
   box-sizing: border-box;
 }
 
+ul {
+    padding: 0px;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -63,13 +67,21 @@ h6 {
     font-size: 0.8em;
 }
 
-$m0: 0em;
-$m1: 0.25em;
-$m2: 0.5em;
-$m3: 1em;
-$m4: 1.5em;
-$m5: 2em;
-$m6: 3em;
+$p0: 0em;
+$p1: 0.25em;
+$p2: 0.5em;
+$p3: 1em;
+$p4: 1.5em;
+$p5: 2em;
+$p6: 3em;
+
+$m0: 0rem;
+$m1: 0.25rem;
+$m2: 0.5rem;
+$m3: 1rem;
+$m4: 1.5rem;
+$m5: 2rem;
+$m6: 3rem;
 
 .pill {
     border-radius: 1000px;
@@ -88,6 +100,15 @@ button {
     border-radius: 10px;
     box-shadow: 2px 4px 4px $shadow-color;
     font-weight: 600;
+    cursor: pointer;
+}
+
+.icon-button {
+    padding: $m3;   
+    border-radius: 50%;
+    box-shadow: none;
+    font-weight: 600;
+    background-color: transparent;
     cursor: pointer;
 }
 

@@ -23,6 +23,8 @@ import Loading from "../components/Loading";
 import { error } from "../../reducers/ProductSummaryReducer";
 import { ProductSummaryModel } from "../../models/ProductSummaryModel";
 import { IImageRepository } from "../../repositories/IImageRepository";
+import { CategoryGallery } from "../components/CategoryGallery";
+import { ProductCategoryModel } from "../../models/ProductCategoryModel";
 
 const update = require('update-immutable').default
 
@@ -52,6 +54,9 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let [isCreatingNewProduct, setIsCreatingNewProduct] = useState(false)
     let [isFetfchingProduct, setIsFetchingProduct] = useState(false)
     let [isLoading, setIsLoading] = useState(false)
+    let [productCategories, setProductCategories] = useState<ProductCategoryModel[]>([])
+    let [showCategoryGallery, setShowCategoryGallery] = useState(false)
+    let [editingProductCategories, setEditingProductCategories] = useState<ProductCategoryModel[]>([])
 
     let dispatch = useAppDispatch()
 
@@ -84,24 +89,25 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 avatar: avatar!,
                 name: productName,
                 rank: 0,
+                categories: productCategories,
             }
 
             try {
                 if (props.productId === undefined) {
                     setIsCreatingNewProduct(true)
-                        let createdProduct = await productRepository!.createProduct(product)
-                        let avatar = images.find(e => e.id === createdProduct.avatar.id)
-                        if (avatar === undefined) {
-                            avatar = await imageRepository!.fetchImageById(createdProduct.avatar.id)
-                        }
-                        let summary : ProductSummaryModel = {
-                            id: createdProduct.id!,
-                            serialNumber: createdProduct.serialNumber,
-                            name: createdProduct.name,
-                            avatar: avatar,
-                        }
-                        dispatch(created(summary))
-                        dispatch(fetchedProductDetail(createdProduct))
+                    let createdProduct = await productRepository!.createProduct(product)
+                    let avatar = images.find(e => e.id === createdProduct.avatar.id)
+                    if (avatar === undefined) {
+                        avatar = await imageRepository!.fetchImageById(createdProduct.avatar.id)
+                    }
+                    let summary : ProductSummaryModel = {
+                        id: createdProduct.id!,
+                        serialNumber: createdProduct.serialNumber,
+                        name: createdProduct.name,
+                        avatar: avatar,
+                    }
+                    dispatch(created(summary))
+                    dispatch(fetchedProductDetail(createdProduct))
                 } else {
                     product.id = props.productId
                     setIsCreatingNewProduct(true)
@@ -145,7 +151,6 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     }
 
     function goBack() {
-        clearAll();
         props.onBack();
     }
 
@@ -176,6 +181,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     setProductName(productDetail.name)
                     setPrices([productDetail.defaultPrice].concat(productDetail.alternativePrices))
                     setAvatar(productDetail.avatar)
+                    setProductCategories([...productDetail.categories])
                 }
             } else {
                 clearAll()
@@ -188,6 +194,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setProductSerialNumber("")
         setProductName("")
         setPrices([])
+        setProductCategories([])
         setAvatar(null)
     }
 
@@ -287,6 +294,31 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
             }
         }
         return ret
+    }
+
+    function removeCategory(category: ProductCategoryModel) {
+        let index = productCategories.findIndex(e => e.category === category.category)
+        console.log('productCategories')
+        console.log(productCategories)
+        productCategories.splice(index, 1)
+        setProductCategories([...productCategories])
+    }
+
+    function displayCategories() {
+        let ret : React.ReactNode[] = []
+        for (let i = 0; i < productCategories.length; i++) {
+            ret.push(
+                <li key={i} className="product-category">
+                    <button className="icon-button" onClick={() => removeCategory(productCategories[i])}>
+                        <i className="fas fa-times"></i>
+                    </button>
+                    <p> { productCategories[i].category } </p>
+                </li>
+            )
+        }
+        return <ul>
+            { ret }
+        </ul>
     }
 
     function onNewPriceCreated() {
@@ -411,6 +443,16 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         }
     }
 
+    function updateProductCategory(productCategory: ProductCategoryModel) {
+        let index = editingProductCategories.findIndex(e => e.category === productCategory.category)
+        if (index === -1) {
+            editingProductCategories.push(productCategory)
+        } else {
+            editingProductCategories.splice(index, 1)
+        }
+        setEditingProductCategories([...editingProductCategories])
+    }
+
     function addPriceLevel() {
         let priceLevel : PriceLevel = {
             minQuantity: editingMinQuantity,
@@ -471,6 +513,16 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         closeAvatarModal()
     }
 
+    function onProductCategoriesOk() {
+        setProductCategories(productCategories.concat(editingProductCategories))
+        setShowCategoryGallery(false)
+    }
+
+    function displayCategoryGallery() {
+        setEditingProductCategories([...productCategories])
+        setShowCategoryGallery(true)
+    }
+
     return <section>
         <header>
             <FormNavigationBar onBackButtonPressed={ goBack } onOkButtonPressed={ onOkButtonPressed }></FormNavigationBar>
@@ -485,6 +537,12 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
             <ConditionalRendering display={ showAvatarModal }>
                 <Modal show={ showAvatarModal } onOk={ selectedAvatarImage.length > 0? onAvatarSelected : undefined } onClose={ closeAvatarModal }>
                     <ImageGallery onImageClicked={ onAvatarImageClicked } selectedImages={ selectedAvatarImage }></ImageGallery>
+                </Modal>
+            </ConditionalRendering>
+
+            <ConditionalRendering display={ showCategoryGallery }>
+                <Modal onOk={ editingProductCategories.length > 0? onProductCategoriesOk : undefined } show={ showCategoryGallery } onClose={ () => setShowCategoryGallery(false) }>
+                    <CategoryGallery onProductCategoryClicked={ updateProductCategory } selectedProductCategories={ editingProductCategories }></CategoryGallery>
                 </Modal>
             </ConditionalRendering>
 
@@ -519,11 +577,21 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     </label>
                     <input value={ productSerialNumber } onChange={evt => setProductSerialNumber(evt.target.value) } className="form-text-input" type="text" id="product-id-input"></input>
 
-                    <label htmlFor="product-id-input">
+                    <label htmlFor="product-name-input">
                         <h5 className="required-label">Tên sản phẩm</h5>
                     </label>
-                    <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input" type="text" id="product-id-input"></input>
+                    <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input" type="text" id="product-name-input"></input>
                 </form>
+            </article>
+
+            <article className="product-categories">
+                <h4 className="title">Danh mục</h4>
+                { displayCategories() }
+
+                <button className="add-unit-button" onClick={ displayCategoryGallery }>
+                    <i className="fas fa-plus"></i>
+                    <div> Thêm danh mục </div>
+                </button>
             </article>
 
             <article>

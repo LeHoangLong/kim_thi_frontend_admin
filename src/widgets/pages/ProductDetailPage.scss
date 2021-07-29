@@ -57,6 +57,16 @@ main .product-detail-page {
     }
 }
 
+.product-categories {
+    padding-left: 0px;
+    .product-category {
+        display: flex;
+        list-style: none;
+        align-items: center;
+        justify-content: start;
+    }
+}
+
 .display-price-form {
     padding: $m4 $m3;
     > * {

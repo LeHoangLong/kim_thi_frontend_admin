@@ -1,0 +1,27 @@
+@import '../Common.scss';
+
+.category-gallery {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.category-select {
+    width: 80%;
+    margin-top: $m3;
+}
+
+.category-select option {
+    padding: $p3;
+}
+
+.new-category-row {
+    display: flex;
+    width: 80%;
+    margin-top: $m4;
+}
+
+.new-category-input {
+    min-width: 0px;
+    margin-right: $m3;
+}
