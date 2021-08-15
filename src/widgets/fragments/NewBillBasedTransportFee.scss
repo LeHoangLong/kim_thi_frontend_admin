@@ -1,0 +1,11 @@
+@import '../Common.scss';
+
+.new-bill-based-transport-fee {
+    display: flex;
+    flex-direction: column;
+    margin: $m3;
+    label {
+        margin-top: $m3;
+        margin-bottom: $m3;
+    }
+}

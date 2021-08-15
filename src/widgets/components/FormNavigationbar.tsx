@@ -24,7 +24,7 @@ export const FormNavigationBar = (props: FormNavigationBarProps) => {
         })()}
         {(() => {
             if (props.onOkButtonPressed !== undefined) {
-                return <IconButton className="icon-button right-icon" onClick={ props.onOkButtonPressed }>
+                return <IconButton onClick={ props.onOkButtonPressed }>
                     <i className="fas fa-check"></i>
                 </IconButton>
             } else {

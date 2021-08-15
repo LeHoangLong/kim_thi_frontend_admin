@@ -1,0 +1,63 @@
+@import '../Common.scss';
+
+.transport-fee-detail-page-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    header,
+    .body {
+        width: 80%;
+        border: none;
+    }
+
+    .body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    label {
+        margin-top: $m3;
+    }
+
+    .title {
+        margin-top: $m3;
+    }
+
+    .row {
+        display: flex;
+        align-items: flex-end;
+        width: 100%;
+        input {
+            flex-grow: 1;
+        }
+        p {
+            @extend h5;
+            margin-left: $m3;
+            margin-left: $m3;
+            white-space: nowrap;
+        }
+    }
+
+
+    .add-bill-based-fee-button {
+        border: none;
+        box-shadow: none;
+        background-color: transparent;
+        display: flex;
+        align-items: center;
+        * {
+            padding-right: $p3;
+        }
+    }
+
+    .bill-based-fee-card {
+        padding: $p3;
+        margin-top: $m3;
+        margin-bottom: $m3;
+        * {
+            margin-top: $m3;
+            margin-bottom: $m3;
+        }
+    }
+}

@@ -1,0 +1,20 @@
+@import '../Common.scss';
+
+.scrolling-page {
+    display: flex;
+    .scrolling-page-index {
+        display: flex;
+        overflow: hidden;
+        flex-grow: 1;
+    }
+
+    * {
+        border: none;
+        background-color: transparent;
+        box-shadow: none;
+    }
+
+    .selected {
+        color: $primary-color;
+    }
+}

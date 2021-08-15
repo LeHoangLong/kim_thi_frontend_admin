@@ -1,0 +1,22 @@
+@import '../Common.scss';
+
+.add-origin-section {
+    margin: $m3;
+    display: flex;
+    flex-direction: column;
+    label {
+        margin-bottom: $m3;
+    }
+    .add-origin-input {
+        flex-grow: 1;
+    }
+
+    header {
+        margin-top: $m3;
+        margin-bottom: $m3;
+    }
+
+    select {
+        width: 100%;
+    }
+}

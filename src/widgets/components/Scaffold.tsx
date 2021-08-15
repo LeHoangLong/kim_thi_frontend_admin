@@ -45,7 +45,7 @@ export const Scaffold = (props: ScaffoldProps) => {
     }
 
     return <section className="scaffold">
-        <header>
+        <header className="scaffold-header">
             <button className="icon-button" onClick={ onShowSidebarButtonClick }>
                 <i className="fas fa-bars"></i>
             </button>

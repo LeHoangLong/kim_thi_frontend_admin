@@ -30,16 +30,16 @@ export const LoginPage = () => {
     return <main className="login-page">
         <form className="login-form">
             <label htmlFor="username">
-                <h4>
+                <p className="h4">
                     Username
-                </h4>
+                </p>
             </label>
             <input value={username} onChange={e => setUsername(e.target.value)} className="pill border" id="username">
             </input>
             <label htmlFor="password">
-                <h4>
+                <p className="h4">
                     Password
-                </h4>
+                </p>
             </label>
             <input value={password} onChange={e => setPassword(e.target.value)} className="pill border" id="password" type="password">
             </input>

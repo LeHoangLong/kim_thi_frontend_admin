@@ -22,11 +22,11 @@ export const Modal = ( props: ModalProps ) => {
 
     return <section className={ classStr } style={{ zIndex: zIndex }}>
         <div className="modal-blacken-layer" onClick={ props.onClose }></div>
-        <main style={{ zIndex: zIndex + 1  }}>
+        <div className="main" style={{ zIndex: zIndex + 1  }}>
             <header>
                 <FormNavigationBar onOkButtonPressed={ props.onOk } onBackButtonPressed={ props.onClose } closeOrBack={true}></FormNavigationBar>
             </header>
             { props.children }
-        </main>
+        </div>
     </section>
 }

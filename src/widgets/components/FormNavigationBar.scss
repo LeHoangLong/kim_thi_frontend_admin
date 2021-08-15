@@ -3,10 +3,6 @@
 .form-navigation-bar {
     display: flex;
     align-items: center;
+    justify-content: space-between;
     width: 100%;
-
-    .right-icon {
-        position: absolute;
-        right: 0px;
-    }
 }

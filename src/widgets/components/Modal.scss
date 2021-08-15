@@ -7,12 +7,12 @@
     top: 0px;
     justify-content: center;
     align-items: center;
-    main {
+    .main {
         background-color: white;
         border-radius: 10px;
         margin: $m4;
         width: 80%;
-        height: 80%;
+        max-height: 80%;
         overflow: auto;
     }
 }

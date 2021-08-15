@@ -247,7 +247,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 <div key={ newlyAddedImages[i].id } className="image-container">
                     <img alt={ newlyAddedImages[i].path } src={ newlyAddedImages[i].path }></img>
                     <IconButton onClick={() => onRemoveNewlyAddedImage(i)}>
-                        <h5>{ String.fromCharCode(10005) }</h5>
+                        <p className="h5">{ String.fromCharCode(10005) }</p>
                     </IconButton>
                 </div>
             )
@@ -573,14 +573,14 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 <h4 className="title">Thông tin chung</h4>
                 <form>
                     <label htmlFor="product-id-input">
-                        <h5>Mã sản phẩm</h5>
+                        <p className="h5">Mã sản phẩm</p>
                     </label>
-                    <input value={ productSerialNumber } onChange={evt => setProductSerialNumber(evt.target.value) } className="form-text-input" type="text" id="product-id-input"></input>
+                    <input value={ productSerialNumber } onChange={evt => setProductSerialNumber(evt.target.value) } className="form-text-input h5" type="text" id="product-id-input"></input>
 
                     <label htmlFor="product-name-input">
-                        <h5 className="required-label">Tên sản phẩm</h5>
+                        <p className="h5 required-label">Tên sản phẩm</p>
                     </label>
-                    <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input" type="text" id="product-name-input"></input>
+                    <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input h5" type="text" id="product-name-input"></input>
                 </form>
             </article>
 

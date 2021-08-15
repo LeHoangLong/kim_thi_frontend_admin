@@ -179,7 +179,9 @@ export const ProductPage = () => {
                     </article> 
                 }
             })()}
-            <FloatingActionButton onClick={ onAddNewProductClick }></FloatingActionButton>
+            <FloatingActionButton onClick={ onAddNewProductClick }>
+                <i className="fas fa-plus"></i>
+            </FloatingActionButton>
         </section>
         <PageTransition show={ showProductDetailPage } zIndex={ 101 }>
             <ProductDetailPage productId={ selectedProductId } onBack={ () => setShowProductDetailPage(false) }></ProductDetailPage>

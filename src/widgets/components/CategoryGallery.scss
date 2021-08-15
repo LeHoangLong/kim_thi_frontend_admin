@@ -19,6 +19,10 @@
     display: flex;
     width: 80%;
     margin-top: $m4;
+    margin-bottom: $m4;
+    input {
+        flex-grow: 1;
+    }
 }
 
 .new-category-input {

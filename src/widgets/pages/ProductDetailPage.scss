@@ -38,7 +38,7 @@ main .product-detail-page {
         margin-top: $m4;
         .remove-price-button-container {
             display: flex;
-            justify-content: end;
+            justify-content: flex-end;
         }
     }
 
@@ -63,7 +63,7 @@ main .product-detail-page {
         display: flex;
         list-style: none;
         align-items: center;
-        justify-content: start;
+        justify-content: flex-start;
     }
 }
 
@@ -105,7 +105,7 @@ main .product-detail-page {
         background-color: transparent;
         box-shadow: none;
         display: flex;
-        justify-content: start;
+        justify-content: flex-start;
         align-items: center;
         padding: 0px;
         > * {
@@ -135,10 +135,6 @@ main .product-detail-page {
             visibility: hidden;
         }
     }
-}
-
-input {
-    @extend h5;
 }
 
 .add-image {

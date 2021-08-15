@@ -71,9 +71,9 @@ export const ErrorDisplay = (props : ErrorDisplayProps) => {
                                     { titleStr }
                                 </h4>
                             </header>
-                            <h5>
+                            <p>
                                 { currentError.message }
-                            </h5>
+                            </p>
                         </article>
                     } else {
                         return <div/>
