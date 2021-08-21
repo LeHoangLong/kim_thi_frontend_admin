@@ -19,4 +19,16 @@
     select {
         width: 100%;
     }
+
+    .multiple-select {
+        border: 1px solid $border-color;
+        border-radius: 10px;
+        .element {
+            padding: $p3;
+        }
+    }
+
+    .create-origin-button {
+        margin-left: $m3;
+    }
 }

@@ -3,20 +3,20 @@
 .fee-summaries {
     list-style: none;
     display: grid;
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     gap: $m3;
     margin: $m3;
 
-    @media screen and (max-width: 650px) {
-        grid-template-columns: repeat(4, 1fr);
-    }
-
-    @media screen and (max-width: 500px) {
+    @media screen and (max-width: 992px) {
         grid-template-columns: repeat(3, 1fr);
     }
 
-    @media screen and (max-width: 350px) {
+    @media screen and (max-width: 768px) {
         grid-template-columns: repeat(2, 1fr);
+    }
+
+    @media screen and (max-width: 576px) {
+        grid-template-columns: repeat(1, 1fr);
     }
 
     .card {
@@ -29,4 +29,12 @@
     margin: $m3;
     max-width: 500px;
     text-align: center;
+}
+
+.no-fee-page {
+    height: 100%;
+    flex-grow:1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

@@ -53,23 +53,23 @@ export const NewBillBasedTransportFee = (props: NewBillBasedTransportFeeProps) =
 
     return <section className="new-bill-based-transport-fee">
         <label>
-            <p className="h5"> Giá trị đơn hàng tối thiểu </p>
+            <strong className=""> Giá trị đơn hàng tối thiểu </strong>
         </label>
-        <DecimalInput className="form-text-input" value={ fee?.minBillValue } onChange={e => setMinBillValue(e)}></DecimalInput>
+        <DecimalInput className="body-text-1 form-text-input" value={ fee?.minBillValue } onChange={e => setMinBillValue(e)}></DecimalInput>
 
         <label>
-            <p className="h5"> Phí cơ bản </p>
+            <strong className=""> Phí cơ bản </strong>
         </label>
-        <DecimalInput className="form-text-input" value={ fee?.basicFee } onChange={e => setBasicFee(e)}></DecimalInput>
+        <DecimalInput className="body-text-1 form-text-input" value={ fee?.basicFee } onChange={e => setBasicFee(e)}></DecimalInput>
 
         <label>
-            <p className="h5"> Phần trăm giá trị đơn hàng </p>
+            <strong className=""> Phần trăm giá trị đơn hàng </strong>
         </label>
-        <DecimalInput className="form-text-input" value={ fee?.fractionOfBill } onChange={e => setFractionOfBill(e)}></DecimalInput>
+        <DecimalInput className="body-text-1 form-text-input" value={ fee?.fractionOfBill } onChange={e => setFractionOfBill(e)}></DecimalInput>
 
         <label>
-            <p className="h5"> Phần trăm tổng phí vận chuyển </p>
+            <strong className=""> Phần trăm tổng phí vận chuyển </strong>
         </label>
-        <DecimalInput className="form-text-input" value={ fee?.fractionOfTotalTransportFee } onChange={e => setFractionOfTotalTransportFee(e)}></DecimalInput>
+        <DecimalInput className="body-text-1 form-text-input" value={ fee?.fractionOfTotalTransportFee } onChange={e => setFractionOfTotalTransportFee(e)}></DecimalInput>
     </section>
 }

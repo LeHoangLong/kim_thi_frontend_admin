@@ -2,7 +2,6 @@ import axios, { AxiosError } from "axios";
 import { HOST_URL } from "../config/Url";
 import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
-import { EPriceUnit, ProductPrice } from "../models/ProductPrice";
 import { ProductSummaryModel } from "../models/ProductSummaryModel";
 import { IProductRepository } from "./IProductRepository";
 

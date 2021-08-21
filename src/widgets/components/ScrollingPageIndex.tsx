@@ -75,7 +75,11 @@ export const ScrollingPageIndex = (props: ScrollingPageIndexProps) => {
         return ret
     }
 
-    return <div className="scrolling-page">
-        { displayNumberOfPages() }
-    </div>
+    if (props.max <= props.min + 1) {
+        return <div></div>
+    } else {
+        return <div className="scrolling-page">
+            { displayNumberOfPages() }
+        </div>
+    }
 }

@@ -60,6 +60,7 @@ const slice = createSlice({
         },
         createOrigin: (state, action: PayloadAction<DistanceBasedTransportFeeOrigin>) => {
             state.origins.splice(0, 0, action.payload)
+            state.numberOfOrigins += 1
             state.originsMap[action.payload.id] = action.payload
         },
         removeOriginByIndex: (state, action: PayloadAction<number>) => {
@@ -99,7 +100,8 @@ const slice = createSlice({
                     city: newFeeDetail.city,
                 }
             }
-            state.feeDetails[currentId] = newFeeDetail
+            delete state.feeDetails[currentId]
+            state.feeDetails[newFeeDetail.id] = newFeeDetail
         },
         createTransportFee: (state, action: PayloadAction<AreaTransportFee>) => {
             let newFeeDetail = action.payload

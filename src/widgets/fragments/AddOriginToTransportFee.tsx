@@ -126,7 +126,7 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
             }
         }
 
-        return <MultipleSelect elements={ret} selected={ selectedOriginIds } onChange={(e, isSelected) => {console.log(e);props.onChange(parseInt(e.value), isSelected)} }></MultipleSelect>
+        return <MultipleSelect elements={ret} selected={ selectedOriginIds } onChange={(e, isSelected) => {props.onChange(parseInt(e.value), isSelected)} }></MultipleSelect>
         /*
         return <select multiple={ true } value={ selectedOriginIds } onChange={ onSelectedOriginsChanged }>
             { ret }
@@ -142,13 +142,17 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
         return <Loading></Loading>
     }
     return  <section className="add-origin-section">
-        <article>
-            <header>
-                <strong>Chọn kho xuất</strong>
-            </header>
-            { displayOrigins() }
-            <ScrollingPageIndex onSelect={ page => setPageNumber(page) } min={0} max={ Math.ceil(numberOfOrigins / Pagination.DEFAULT_PAGE_SIZE) } currentIndex={ pageNumber }></ScrollingPageIndex>
-        </article>
+        {(() => {
+            if (numberOfOrigins > 0) {
+                return <article>
+                    <header>
+                        <strong>Chọn kho xuất</strong>
+                    </header>
+                    { displayOrigins() }
+                    <ScrollingPageIndex onSelect={ page => setPageNumber(page - 1) } min={ 1 } max={ Math.ceil(numberOfOrigins / Pagination.DEFAULT_PAGE_SIZE) + 1 } currentIndex={ pageNumber + 1 }></ScrollingPageIndex>
+                </article>
+            }
+        })()}
 
         <article>
             <header>
@@ -156,7 +160,7 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
             </header>
             <div className="row">
                 <input value={ originAddress } onChange={ e => setOriginAddress( e.target.value ) } placeholder="Địa chỉ kho xuất" id="origin-address-input" type="text" className="add-origin-input form-text-input"></input>
-                <button onClick={ onCreateOriginButtonClicked } className="primary-button">Tạo</button>
+                <button disabled={ originAddress.length === 0 } onClick={ onCreateOriginButtonClicked } className="primary-button create-origin-button">Tạo</button>
             </div>
         </article>
     </section>

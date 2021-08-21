@@ -6,7 +6,7 @@ import Services from "../../config/Services"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { AreaTransportFee, BillBasedTransportFee, DistanceBasedTransportFeeOrigin } from "../../models/TransportFee"
-import { insertOriginToMap, setOriginMapStatus, setOriginStatusState, setTransportFeeDetailStatus } from "../../reducers/TransportFeeReducer"
+import { createTransportFee, insertOriginToMap, insertTransportFeeDetail, setNumberOfTransportFee, setOriginMapStatus, setOriginStatusState, setTransportFeeDetailStatus, updateTransportFee } from "../../reducers/TransportFeeReducer"
 import { ITransportFeeRepository } from "../../repositories/ITransportFeeRepository"
 import Locator from "../../services/Locator"
 import { ConditionalRendering } from "../background/ConditionalRendering"
@@ -20,6 +20,7 @@ import './TransportFeeDetailPage.scss'
 
 export interface TransportFeeDetailPageProps {
     onBack?() : void;
+    onFeeUpdated(updatedFee: AreaTransportFee) : void,
     feeId: number | null;
 }
 
@@ -29,6 +30,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
     let feeDetailStatus = useAppSelector(state => state.transportFees.feeDetailOperationStatus)
     let originsMapStatus = useAppSelector(state => state.transportFees.originsMapOperationStatus)
     let originsMap = useAppSelector(state => state.transportFees.originsMap)
+    let numberOfTransportFees = useAppSelector(state => state.transportFees.numberOfTransportFees)
 
     let dispatch = useAppDispatch()
 
@@ -50,13 +52,15 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         fractionOfBill: '0',
         fractionOfTotalTransportFee: '0',
     })
-
+    let [iSFetchingFee, setIsFetchingFee] = useState(false)
+    
     async function fetchFeeDetail(feeId: number) : Promise<AreaTransportFee> {
         dispatch(setTransportFeeDetailStatus({
             status: EStatus.IN_PROGRESS
         }))
         try {
             let ret = await feeRepository!.fetchTransportFee(feeId)
+            dispatch(insertTransportFeeDetail(ret))
             dispatch(setTransportFeeDetailStatus({
                 status: EStatus.SUCCESS
             }))
@@ -207,15 +211,25 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         return ret
     }
 
+    function onRemoveOriginClicked(index: number) {
+        originIds.splice(index, 1)
+        setOriginIds([...originIds])
+    }
+
     function displayDistanceBasedTransportFeeOrigins() {
         let ret : React.ReactNode[] = []
         for (let i = 0; i < originIds.length; i++) {
             let origin = originsMap[originIds[i]]
             if (origin) {
                 ret.push(
-                    <p key={ origin.id }>
-                        { origin.address }
-                    </p>
+                    <div className="origins" key={ origin.id } >
+                        <button className="icon-button" onClick={() => onRemoveOriginClicked( i ) }>
+                            <i className="fas fa-times"></i>
+                        </button>
+                        <p>
+                            { origin.address }
+                        </p>
+                    </div>
                 )
             }
         }
@@ -230,16 +244,56 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         }
     }
 
-    function onOkButtonPressed() { 
-        if (props.feeId !== null) {
-            // create fee
-        } else {
-            // update fee
+    async function _createOrUpdateTransportFee(feeId: number | null) {
+        dispatch(setTransportFeeDetailStatus({
+            status: EStatus.IN_PROGRESS
+        }))
+        try {
+            if (feeId === null) {
+                let createdFee = await feeRepository!.createTransportFee({
+                    name: name,
+                    city: city,
+                    basicFee: basicFee,
+                    originIds: originIds,
+                    billBasedTransportFees: billBasedFees,
+                    distanceFeePerKm: feePerKm,
+                })
+                dispatch(createTransportFee(createdFee))
+                dispatch(setNumberOfTransportFee(numberOfTransportFees + 1))
+            } else {
+                let updatedFee = await feeRepository!.updateTransportFee(feeId, {
+                    name: name,
+                    city: city,
+                    basicFee: basicFee,
+                    originIds: originIds,
+                    billBasedTransportFees: billBasedFees,
+                    distanceFeePerKm: feePerKm,
+                })
+                dispatch(updateTransportFee({current: feeId, new: updatedFee}))
+                props.onFeeUpdated(updatedFee)
+            }
+            dispatch(setTransportFeeDetailStatus({
+                status: EStatus.SUCCESS
+            })) 
+        } catch (exception) {
+            let axiosError = exception as AxiosError
+            dispatch(setTransportFeeDetailStatus({
+                status: EStatus.ERROR,
+                message: axiosError.message,
+            }))
+        } finally {
+            dispatch(setTransportFeeDetailStatus({
+                status: EStatus.IDLE
+            })) 
         }
     }
 
+    function onOkButtonPressed() { 
+        _createOrUpdateTransportFee(props.feeId).then( props.onBack )
+    }
+
     function onAddOriginButtonClicked() {
-        setEditingOriginIds(originIds)
+        setEditingOriginIds([...originIds])
         setShowAddOrigin(true)
     }
 
@@ -253,7 +307,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         if (index === -1) {
             editingOriginIds.push(changedOriginId)
         } else {
-            editingOriginIds.splice(changedOriginId, 1)
+            editingOriginIds.splice(index, 1)
         }
         setEditingOriginIds([...editingOriginIds])
     }
@@ -276,27 +330,27 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
                 <h3 className="title">Thông tin chung</h3>
             </header>
             <div className="body">
-                <label className="title" htmlFor="basic-fee">
+                <label className="" htmlFor="basic-fee">
                     <strong>
                         Tên phí
                     </strong>
                 </label>
-                <input className="h5 form-text-input" type="text" id="basic-fee" value={name} onChange={e => setName(e.target.value)}></input>
+                <input className="body-text-1 form-text-input" type="text" id="basic-fee" value={name} onChange={e => setName(e.target.value)}></input>
 
-                <label className="title" htmlFor="city">
+                <label className="" htmlFor="city">
                     <strong>
                         Thành phố
                     </strong>
                 </label>
-                <input className="h5 form-text-input" type="text" id="city" value={city} onChange={e => setCity(e.target.value)}></input>
+                <input className="body-text-1  form-text-input" type="text" id="city" value={city} onChange={e => setCity(e.target.value)}></input>
 
-                <label className="title" htmlFor="basic-fee">
+                <label className="" htmlFor="basic-fee">
                     <strong>
                         Phí cơ bản
                     </strong>
                 </label>
                 <div className="row">
-                    <DecimalInput className="h5 form-text-input" id="basic-fee" value={basicFee} onChange={ setBasicFee }></DecimalInput>
+                    <DecimalInput className="body-text-1  form-text-input" id="basic-fee" value={basicFee} onChange={ setBasicFee }></DecimalInput>
                     <p>đ</p>
                 </div>
             </div>
@@ -309,7 +363,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
             
             <div className="body">
                 { displayBillBasedTransportFees() }
-                <button className="add-bill-based-fee-button" onClick={ () => setShowAddBillBasedFee(true) }> 
+                <button className="add-button" onClick={ () => setShowAddBillBasedFee(true) }> 
                     <i className="fas fa-plus"></i>
                     <p>Thêm phí</p> 
                 </button>
@@ -321,15 +375,15 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
                 <h4 className="title">Phí theo khoảng cách</h4>
             </header>
             <div className="body">
-                <label htmlFor="address" >Phí theo km</label>
+                <label htmlFor="address" ><strong>Phí theo km</strong></label>
                 <div className="row">
-                    <DecimalInput className="h5 form-text-input" id="address"></DecimalInput>
+                    <DecimalInput value={ feePerKm } onChange={ setFeePerKm } className="body-text-1 form-text-input" id="address"></DecimalInput>
                     <p>đ / km</p>
                 </div>
 
                 { displayDistanceBasedTransportFeeOrigins() }
 
-                <button className="add-bill-based-fee-button" onClick={ onAddOriginButtonClicked }> 
+                <button className="add-button" onClick={ onAddOriginButtonClicked }> 
                     <i className="fas fa-plus"></i>
                     <p>Thêm kho xuất</p> 
                 </button>

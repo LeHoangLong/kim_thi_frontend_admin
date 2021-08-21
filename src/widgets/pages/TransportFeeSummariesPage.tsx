@@ -131,6 +131,11 @@ export const TransportFeeSummariesPage = (props: TransportFeeSummariesPageProps)
     }
 
     let numberOfPages = Math.ceil(numberOfFees / Pagination.DEFAULT_PAGE_SIZE)
+    if (numberOfFees === 0) {
+        return <article className="no-fee-page">
+            <h5>Chưa có phí vận chuyển nào được tạo</h5>
+        </article>
+    }
     return <React.Fragment>
         {(() => {
             if (isLoading) {

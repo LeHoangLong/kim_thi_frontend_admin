@@ -65,7 +65,11 @@ export const DecimalInput = (props: NumberInputProps) => {
         let index = 0
         for (let i = 0; i < value.length; i++) {
             if (value[i] !== '0') {
-                index = i
+                if (value[i] === '.') {
+                    index = i - 1 // 0.1
+                } else {
+                    index = i
+                }
                 break
             }
         }

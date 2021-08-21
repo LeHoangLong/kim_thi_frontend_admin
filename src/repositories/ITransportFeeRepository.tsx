@@ -13,7 +13,6 @@ export interface ITransportFeeRepository {
     fetchNumberOfOrigins() : Promise<number>;
     fetchOrigins(limit: number, offset: number) : Promise<DistanceBasedTransportFeeOrigin[]>
     createOrigin(address: string) : Promise<DistanceBasedTransportFeeOrigin>;
-    deleteOrigin(id: number) : Promise<void>
     fetchOriginsById(ids: number[]) : Promise<DistanceBasedTransportFeeOrigin[]>
 
     fetchNumberOfTransportFees() : Promise<number>;

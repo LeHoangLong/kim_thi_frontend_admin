@@ -18,6 +18,7 @@ dd {
   box-sizing: border-box;
 }
 
+ol,
 ul {
     padding: 0px;
 }
@@ -113,6 +114,12 @@ button {
     cursor: pointer;
 }
 
+button[disabled] {
+    box-shadow: none;
+    background-color: #CCCCCC;
+    color: #848484;
+}
+
 .icon-button {
     padding: $m3;   
     border-radius: 50%;
@@ -124,6 +131,7 @@ button {
 
 $primary-color: #004800;
 $primary-color-2: #30a12f;
+$secondary-color: #96004B;
 $on-primary-color: white;
 
 .primary-button {
@@ -173,4 +181,8 @@ form {
 
 .row {
     display: flex;
+}
+
+.h-100pc {
+    height: 100%;
 }
