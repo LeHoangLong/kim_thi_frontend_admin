@@ -1,5 +1,5 @@
 import { HashRouter, Route, Switch } from "react-router-dom"
-import { ErrorDisplay } from "../components/ErrorDisplay"
+import { ErrorDisplay } from "../fragments/ErrorDisplay"
 import { Dashboard } from "../pages/Dashboard"
 
 export const Router = () => {

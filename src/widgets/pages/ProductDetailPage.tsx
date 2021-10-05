@@ -4,7 +4,7 @@ import './ProductDetailPage.scss'
 import { IconButton } from "../components/IconButton";
 import { Modal } from "../components/Modal";
 import React, { Fragment, ReactNode, useState } from "react";
-import { ImageGallery } from "../components/ImagGallery";
+import { ImageGallery } from "../fragments/ImagGallery";
 import { ImageModel } from "../../models/ImageModel";
 import { EPriceUnit, PriceLevel, ProductPrice } from "../../models/ProductPrice";
 import { NumberInput } from "../components/NumberInput";
@@ -23,7 +23,7 @@ import Loading from "../components/Loading";
 import { error } from "../../reducers/ProductSummaryReducer";
 import { ProductSummaryModel } from "../../models/ProductSummaryModel";
 import { IImageRepository } from "../../repositories/IImageRepository";
-import { CategoryGallery } from "../components/CategoryGallery";
+import { CategoryGallery } from "../fragments/CategoryGallery";
 import { ProductCategoryModel } from "../../models/ProductCategoryModel";
 
 const update = require('update-immutable').default

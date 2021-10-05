@@ -7,9 +7,9 @@ import { clear, created, creating, fetched, setNumberOfImages, error } from "../
 import { push } from "../../reducers/ErrorReducer"
 import { IImageRepository } from "../../repositories/IImageRepository"
 import Locator from "../../services/Locator"
-import { IconButton } from "./IconButton"
+import { IconButton } from "../components/IconButton"
 import './ImageGallery.scss'
-import Loading from "./Loading"
+import Loading from "../components/Loading"
 import { ImageModel } from "../../models/ImageModel"
 
 export interface ImageGalleryProps {

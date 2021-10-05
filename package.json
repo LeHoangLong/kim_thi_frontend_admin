@@ -22,6 +22,7 @@
     "axios": "^0.21.1",
     "decimal.js": "^10.3.1",
     "helmet": "^4.6.0",
+    "inversify": "^5.1.1",
     "node-sass": "^6.0.0",
     "package.json": "^2.0.1",
     "react": "^17.0.2",
@@ -63,6 +64,7 @@
     ]
   },
   "devDependencies": {
+    "@types/inversify": "^2.0.33",
     "@types/redux": "^3.6.0"
   }
 }

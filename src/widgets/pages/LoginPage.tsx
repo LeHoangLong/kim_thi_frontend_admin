@@ -4,7 +4,7 @@ import { useAppDispatch } from '../../hooks/Hooks';
 import { error, loggedIn, loggingIn } from '../../reducers/UserReducer';
 import { IUserRepository, IUserRepositoryErrorAuthenticationFailed } from '../../repositories/IUserRepository';
 import Locator from '../../services/Locator';
-import './LoginPage.scss';
+import styles from './LoginPage.module.scss';
 
 export const LoginPage = () => {
     let [username, setUsername] = useState('');
@@ -27,23 +27,23 @@ export const LoginPage = () => {
         
     }
 
-    return <main className="login-page">
-        <form className="login-form">
+    return <main className={ styles.login_page }>
+        <form className={ styles.login_form }>
             <label htmlFor="username">
                 <p className="h4">
                     Username
                 </p>
             </label>
-            <input value={username} onChange={e => setUsername(e.target.value)} className="pill border" id="username">
+            <input value={username} onChange={e => setUsername(e.target.value)} className={`${styles.input} pill border`} id="username">
             </input>
             <label htmlFor="password">
                 <p className="h4">
                     Password
                 </p>
             </label>
-            <input value={password} onChange={e => setPassword(e.target.value)} className="pill border" id="password" type="password">
+            <input value={password} onChange={e => setPassword(e.target.value)} className={`${styles.input} pill border`} id="password" type="password">
             </input>
-            <button className="primary-button" onClick={onLoginHandler}>
+            <button className={`${styles.button} primary-button`} onClick={onLoginHandler}>
                 Log in
             </button>
         </form>

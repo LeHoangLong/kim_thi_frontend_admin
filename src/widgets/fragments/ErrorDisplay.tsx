@@ -1,7 +1,7 @@
 import { Fragment, useEffect, useState } from "react"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EErrorLevel, ErrorModel } from "../../models/ErrorModel"
-import { Modal } from "./Modal"
+import { Modal } from "../components/Modal"
 import './ErrorDisplay.scss'
 import { pop } from "../../reducers/ErrorReducer"
 

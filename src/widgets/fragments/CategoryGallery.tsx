@@ -8,7 +8,7 @@ import { addCategories, clearCategories, setNumberOfCategories, updateCategorySt
 import { IProductCategoryRepository } from "../../repositories/IProductCategoryRepository"
 import Locator from "../../services/Locator"
 import './CategoryGallery.scss'
-import Loading from "./Loading"
+import Loading from "../components/Loading"
 
 export interface CategoryGalleryProps {
     onProductCategoryClicked(category: ProductCategoryModel) : void;
