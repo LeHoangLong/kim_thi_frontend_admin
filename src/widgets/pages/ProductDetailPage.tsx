@@ -25,6 +25,7 @@ import { ProductSummaryModel } from "../../models/ProductSummaryModel";
 import { IImageRepository } from "../../repositories/IImageRepository";
 import { CategoryGallery } from "../fragments/CategoryGallery";
 import { ProductCategoryModel } from "../../models/ProductCategoryModel";
+import styles from './ProductDetailPage.module.scss'
 
 const update = require('update-immutable').default
 
@@ -57,6 +58,10 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let [productCategories, setProductCategories] = useState<ProductCategoryModel[]>([])
     let [showCategoryGallery, setShowCategoryGallery] = useState(false)
     let [editingProductCategories, setEditingProductCategories] = useState<ProductCategoryModel[]>([])
+    let [wholesalePrices, setWholesalePrices] = useState<string[]>([])
+    let [showNewWholesalePrice, setShowNewWholesalePrice] = useState(false)
+    let [editingWholesalePrice, setEditingWholesalePrice] = useState('')
+    let [editingWholesalePriceIndex, setEditingWholesalePriceIndex] = useState(-1)
 
     let dispatch = useAppDispatch()
 
@@ -90,6 +95,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 name: productName,
                 rank: 0,
                 categories: productCategories,
+                wholesalePrices: wholesalePrices,
             }
 
             try {
@@ -133,7 +139,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 }
 
                 goBack();
-            } catch (exception) { 
+            } catch (exception: any) { 
                 dispatch(push({
                     level: EErrorLevel.ERROR,
                     message: exception,
@@ -164,7 +170,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                         dispatch(fetchingProductDetail(props.productId))
                         productDetail = await productRepository!.fetchProductDetailById(props.productId)
                         dispatch(fetchedProductDetail(productDetail))
-                    } catch (exception) {
+                    } catch (exception: any) {
                         dispatch(errorProductDetail(exception))
                         dispatch(push({
                             level: EErrorLevel.ERROR,
@@ -182,6 +188,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     setPrices([productDetail.defaultPrice].concat(productDetail.alternativePrices))
                     setAvatar(productDetail.avatar)
                     setProductCategories([...productDetail.categories])
+                    setWholesalePrices(productDetail.wholesalePrices)
                 }
             } else {
                 clearAll()
@@ -196,6 +203,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setPrices([])
         setProductCategories([])
         setAvatar(null)
+        setWholesalePrices([])
     }
 
     useEffect(() => {
@@ -298,8 +306,6 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
     function removeCategory(category: ProductCategoryModel) {
         let index = productCategories.findIndex(e => e.category === category.category)
-        console.log('productCategories')
-        console.log(productCategories)
         productCategories.splice(index, 1)
         setProductCategories([...productCategories])
     }
@@ -406,6 +412,12 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         </form>
     }
 
+    function displayWholesalePriceForm() {
+        return <form className={ styles.wholesale_price_from } onSubmit={onEditingWholesalePriceFinished}>
+            <input value={ editingWholesalePrice } onChange={e => setEditingWholesalePrice(e.target.value)} className={ styles.wholesale_price_form_input } placeholder='Giá bán sỉ'></input>
+        </form>
+    }
+
     function updatePriceUnit(index: number, unit: string) {
         let newPrices = update(prices, {
             [index]: {
@@ -497,6 +509,35 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         return ret
     }
 
+
+    function removeWholesalePrice(index: number) {
+        wholesalePrices.splice(index, 1)
+        setWholesalePrices([...wholesalePrices])
+    }
+
+    function onWholesalePriceClickedHandler(index: number) {
+        setEditingWholesalePrice(wholesalePrices[index])
+        setEditingWholesalePriceIndex(index)
+        setShowNewWholesalePrice(true)
+    }
+
+    function displayWholesalePrices() {
+        let ret : React.ReactNode[] = []
+        for (let i = 0; i < wholesalePrices.length; i++) {
+            ret.push(
+                <li className={ styles.wholesale_price_row } key={ wholesalePrices[i] }>
+                    <button className={ styles.icon } onClick={() => removeWholesalePrice(i)}>
+                        <i className='fas fa-times'></i>
+                    </button>
+                    <div className={ styles.wholesale_price } onClick={() => onWholesalePriceClickedHandler(i)}>
+                        <p> { wholesalePrices[i] } </p>
+                    </div>
+                </li>
+            )
+        }
+        return ret
+    }
+
     function closeAvatarModal() {
         setSelectedAvatarImage([])
         setShowAvatarModal(false)
@@ -523,6 +564,22 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setShowCategoryGallery(true)
     }
 
+    function onNewWholesalePriceButtonClicked() {
+        setShowNewWholesalePrice(true)
+        setEditingWholesalePriceIndex(-1)
+        setEditingWholesalePrice('')
+    }
+
+    function onEditingWholesalePriceFinished() {
+        setShowNewWholesalePrice(false)
+        if (editingWholesalePriceIndex == -1) {
+            setWholesalePrices([...wholesalePrices, editingWholesalePrice])
+        } else {
+            wholesalePrices[editingPriceIndex] = editingWholesalePrice
+            setWholesalePrices([...wholesalePrices])
+        }
+    }
+
     return <section>
         <header>
             <FormNavigationBar onBackButtonPressed={ goBack } onOkButtonPressed={ onOkButtonPressed }></FormNavigationBar>
@@ -539,6 +596,10 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     <ImageGallery onImageClicked={ onAvatarImageClicked } selectedImages={ selectedAvatarImage }></ImageGallery>
                 </Modal>
             </ConditionalRendering>
+
+            <Modal show={ showNewWholesalePrice } onOk={ onEditingWholesalePriceFinished } onClose={() => setShowNewWholesalePrice(false)}>
+                { displayWholesalePriceForm() }
+            </Modal>
 
             <ConditionalRendering display={ showCategoryGallery }>
                 <Modal onOk={ editingProductCategories.length > 0? onProductCategoriesOk : undefined } show={ showCategoryGallery } onClose={ () => setShowCategoryGallery(false) }>
@@ -588,18 +649,29 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 <h4 className="title">Danh mục</h4>
                 { displayCategories() }
 
-                <button className="add-unit-button" onClick={ displayCategoryGallery }>
+                <button className="primary-button add-unit-button" onClick={ displayCategoryGallery }>
                     <i className="fas fa-plus"></i>
                     <div> Thêm danh mục </div>
                 </button>
             </article>
 
             <article>
-                <h4 className="title">Đơn vị tính / giá cả</h4>
+                <h4 className="title">Đơn vị tính / giá bán lẻ</h4>
                 { displayPrices() }
                 <button className="primary-button add-unit-button" onClick={ () => setShowPriceModal(true) }>
                     <i className="fas fa-plus"></i>
                     <div> Thêm đơn vị </div>
+                </button>
+            </article>
+
+            <article>
+                <h4 className="title">Giá sỉ</h4>
+                <ul>
+                    { displayWholesalePrices() }
+                </ul>
+                <button className="primary-button add-unit-button" onClick={ onNewWholesalePriceButtonClicked }>
+                    <i className="fas fa-plus"></i>
+                    <div> Thêm giá </div>
                 </button>
             </article>
 

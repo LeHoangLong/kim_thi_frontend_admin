@@ -6,7 +6,7 @@ import { ProductPage } from "./ProductPage"
 import { TransportFeePage } from "./TransportFeePage"
 
 export const Dashboard = () => {
-    let [renderedMenus, setRenderedMenus] = useState<string[]>(["Phí vận chuyển"])
+    let [renderedMenus, setRenderedMenus] = useState<string[]>(["Sản phẩm"])
     let [selectedMenu, setSelectedMenu] = useState(0)
 
     const sidebarMenus : string[] = [ "Phí vận chuyển", "Sản phẩm", "Đơn hàng"]
@@ -25,12 +25,12 @@ export const Dashboard = () => {
                 <OrderPage></OrderPage>
             </ConditionalRendering>
         </div>
-        <div style={{ display: selectedMenu === 2? 'block' : 'none' }} className="h-100pc">
+        <div style={{ display: selectedMenu === 0? 'block' : 'block' }} className="h-100pc">
             <ConditionalRendering display={ renderedMenus.indexOf("Sản phẩm") !== -1 }>
                 <ProductPage></ProductPage>
             </ConditionalRendering>
         </div>
-        <div style={{ display: selectedMenu === 0? 'block' : 'none' }} className="h-100pc">
+        <div style={{ display: selectedMenu === 2? 'block' : 'none' }} className="h-100pc">
             <ConditionalRendering display={ renderedMenus.indexOf("Phí vận chuyển") !== -1 }>
                 <TransportFeePage/>
             </ConditionalRendering>
