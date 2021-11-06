@@ -172,12 +172,20 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         }
     }
 
+    function removeBillBasedFee(index: number) {
+        billBasedFees.splice(index, 1)
+        setBillBasedFees([...billBasedFees])
+    }
+
     function displayBillBasedTransportFees() {
         let ret : React.ReactNode[] = []
         for (let i = 0; i < billBasedFees.length; i++) {
             let billBasedFee = billBasedFees[i];
             ret.push(
                 <li key={ i } className="card bill-based-fee-card">
+                    <button className="remove-bill-based-fee-button" onClick={() => removeBillBasedFee(i)}>
+                        <i className="fas fa-times"></i>
+                    </button>
                     <article>
                         <header>
                             <strong>Giá trị đơn hàng tối thiểu</strong>
@@ -372,11 +380,12 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
 
         <section className="transport-fee-detail-page-section">
             <header>
-                <h4 className="title">Phí theo khoảng cách</h4>
+                <h4 className="title">Kho xuất</h4>
             </header>
             <div className="body">
-                <label htmlFor="address" ><strong>Phí theo km</strong></label>
-                <div className="row">
+                {/* Temporarily remove fee by distance from origin for now */}
+                <label style={{ display: 'none' }} htmlFor="address" ><strong>Phí theo km</strong></label>
+                <div style={{ display: 'none' }} className="row">
                     <DecimalInput value={ feePerKm } onChange={ setFeePerKm } className="body-text-1 form-text-input" id="address"></DecimalInput>
                     <p>đ / km</p>
                 </div>

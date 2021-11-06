@@ -74,3 +74,11 @@
         align-items: center;
     }
 }
+
+.remove-bill-based-fee-button {
+    background-color: transparent;
+    box-shadow: none;
+    padding: 0px;
+    display: flex;
+    justify-content: flex-end;
+}

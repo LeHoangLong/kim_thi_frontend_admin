@@ -116,7 +116,7 @@ export const ProductPage = () => {
                     className = "selected-page"
                 }
                 ret.push(
-                    <button className={ className } onClick={() => setSelectedPageNumber(i)}>
+                    <button key={i} className={ className } onClick={() => setSelectedPageNumber(i)}>
                         { i }
                     </button>
                 )
