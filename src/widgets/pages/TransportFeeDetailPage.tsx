@@ -173,8 +173,9 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
     }
 
     function removeBillBasedFee(index: number) {
-        billBasedFees.splice(index, 1)
-        setBillBasedFees([...billBasedFees])
+        let newBillBasedFees = [...billBasedFees]
+        newBillBasedFees.splice(index, 1)
+        setBillBasedFees(newBillBasedFees)
     }
 
     function displayBillBasedTransportFees() {
