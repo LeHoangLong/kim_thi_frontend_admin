@@ -6,6 +6,7 @@ import ErrorReducer from './ErrorReducer'
 import ProductDetailReducer from './ProductDetailReducer'
 import ProductCategoryReducer from './ProductCategoryReducer'
 import TransportFeeReducer from './TransportFeeReducer'
+import OrderReducer from './OrderReducer'
 // ...
 
 export const store = configureStore({
@@ -17,6 +18,7 @@ export const store = configureStore({
     productCategories: ProductCategoryReducer,
     productDetails: ProductDetailReducer,
     transportFees: TransportFeeReducer,
+    orders: OrderReducer,
   }
 })
 

@@ -6,11 +6,11 @@ import { EStatus } from "../../models/StatusModel"
 import { clear, created, creating, fetched, setNumberOfImages, error } from "../../reducers/ImageReducer"
 import { push } from "../../reducers/ErrorReducer"
 import { IImageRepository } from "../../repositories/IImageRepository"
-import Locator from "../../services/Locator"
 import { IconButton } from "../components/IconButton"
 import './ImageGallery.scss'
 import Loading from "../components/Loading"
 import { ImageModel } from "../../models/ImageModel"
+import myContainer from "../../container"
 
 export interface ImageGalleryProps {
     onImageClicked(image: ImageModel) : void;
@@ -20,7 +20,7 @@ export interface ImageGalleryProps {
 export const ImageGallery = (props : ImageGalleryProps) => {
     let images = useAppSelector(state => state.images.images)
     let imageState = useAppSelector(state => state.images.status)
-    let imageRepository = Locator.get<IImageRepository>(Services.IMAGE_REPOSITORY)
+    let imageRepository = myContainer.get<IImageRepository>(Services.IMAGE_REPOSITORY)
     let fileInput = useRef<HTMLInputElement>(null)
     let formData = new FormData()
     let [isLoading, setIsLoading] = useState(false)
@@ -39,8 +39,8 @@ export const ImageGallery = (props : ImageGalleryProps) => {
                 let createdImage = await imageRepository!.createImage(formData)
                 dispatch(created(createdImage))
             } catch (exception) {
-                dispatch(error(exception))
-                dispatch(push(exception))
+                dispatch(error(exception as any))
+                dispatch(push(exception as any))
             }
         }
     }

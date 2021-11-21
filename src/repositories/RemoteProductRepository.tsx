@@ -1,10 +1,12 @@
 import axios, { AxiosError } from "axios";
+import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
 import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
 import { ProductSummaryModel } from "../models/ProductSummaryModel";
 import { IProductRepository } from "./IProductRepository";
 
+@injectable()
 export class RemoteProductRepository implements IProductRepository {
     async fetchProductSummaries(offset: number, limit: number) : Promise<ProductSummaryModel[]> {
         try {

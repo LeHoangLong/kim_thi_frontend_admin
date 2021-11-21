@@ -1,8 +1,10 @@
 import axios, { AxiosError } from "axios";
+import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
 import { UserModel } from "../models/UserModel";
 import { IUserRepository, IUserRepositoryErrorAuthenticationFailed } from "./IUserRepository";
 
+@injectable()
 export class RemoteUserRepository implements IUserRepository {
     async logIn(username: string, password: string): Promise<UserModel> {
         try {

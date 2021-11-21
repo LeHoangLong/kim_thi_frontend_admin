@@ -6,9 +6,9 @@ import { ProductCategoryModel } from "../../models/ProductCategoryModel"
 import { EStatus } from "../../models/StatusModel"
 import { addCategories, clearCategories, setNumberOfCategories, updateCategoryStateStatus } from "../../reducers/ProductCategoryReducer"
 import { IProductCategoryRepository } from "../../repositories/IProductCategoryRepository"
-import Locator from "../../services/Locator"
 import './CategoryGallery.scss'
 import Loading from "../components/Loading"
+import myContainer from "../../container"
 
 export interface CategoryGalleryProps {
     onProductCategoryClicked(category: ProductCategoryModel) : void;
@@ -22,7 +22,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
     let [newCategory, setNewCategory] = useState<string>("")
 
     let categoriesState = useAppSelector(state => state.productCategories)
-    let productCategoryRepository = Locator.get<IProductCategoryRepository>(Services.PRODUCT_CATEGORY_REPOSITORY)
+    let productCategoryRepository = myContainer.get<IProductCategoryRepository>(Services.PRODUCT_CATEGORY_REPOSITORY)
     let dispatch = useAppDispatch()
 
     useEffect(() => {
@@ -91,7 +91,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
             } catch (exception) {
                 dispatch(updateCategoryStateStatus({
                     status: EStatus.ERROR,
-                    message: exception
+                    message: (exception as any).toString(),
                 }))
             } finally {
                 dispatch(updateCategoryStateStatus({

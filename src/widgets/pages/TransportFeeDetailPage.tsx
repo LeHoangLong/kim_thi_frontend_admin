@@ -3,12 +3,12 @@ import Decimal from "decimal.js"
 import React, { useState } from "react"
 import { useEffect } from "react"
 import Services from "../../config/Services"
+import myContainer from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { AreaTransportFee, BillBasedTransportFee, DistanceBasedTransportFeeOrigin } from "../../models/TransportFee"
 import { createTransportFee, insertOriginToMap, insertTransportFeeDetail, setNumberOfTransportFee, setOriginMapStatus, setOriginStatusState, setTransportFeeDetailStatus, updateTransportFee } from "../../reducers/TransportFeeReducer"
 import { ITransportFeeRepository } from "../../repositories/ITransportFeeRepository"
-import Locator from "../../services/Locator"
 import { ConditionalRendering } from "../background/ConditionalRendering"
 import { DecimalInput } from "../components/DecimalInput"
 import { FormNavigationBar } from "../components/FormNavigationbar"
@@ -26,7 +26,7 @@ export interface TransportFeeDetailPageProps {
 
 export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
     let feeDetails = useAppSelector(state => state.transportFees.feeDetails)
-    let feeRepository = Locator.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
+    let feeRepository = myContainer.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
     let feeDetailStatus = useAppSelector(state => state.transportFees.feeDetailOperationStatus)
     let originsMapStatus = useAppSelector(state => state.transportFees.originsMapOperationStatus)
     let originsMap = useAppSelector(state => state.transportFees.originsMap)

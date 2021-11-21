@@ -1,0 +1,35 @@
+@import '../Common.scss';
+
+.table_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-top: $m3;
+    overflow: auto;
+    display: block;
+}
+
+.table td, .table th {
+    border: 1px solid $border-color;
+    padding: $p3;
+}
+
+.table th {
+    background-color: $primary-color;
+    color: $on-primary-color;
+}
+
+.order_info_row {
+    display: flex;
+    align-items: center;
+}
+
+.order_info_row_header {
+    font-weight: bold;
+    margin: $m3;
+    width: 150px;
+}

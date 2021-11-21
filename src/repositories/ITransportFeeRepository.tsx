@@ -17,6 +17,7 @@ export interface ITransportFeeRepository {
 
     fetchNumberOfTransportFees() : Promise<number>;
     fetchTransportFeeSummaries(limit: number, offset: number) : Promise<AreaTransportSummary[]>;
+    // throw NotFound if id not found
     fetchTransportFee(id: number) : Promise<AreaTransportFee>;
     createTransportFee(args: CreateAreaTransportFeeArgs) : Promise<AreaTransportFee>;
     deleteTransportFee(id: number) : Promise<void>;

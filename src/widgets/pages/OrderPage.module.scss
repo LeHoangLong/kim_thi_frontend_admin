@@ -1,0 +1,24 @@
+@import '../Common.scss';
+
+.form {
+    padding: $m3;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: $m3;
+    row-gap: $m3;
+
+    label {
+        font-weight: bold;
+    }
+
+    input {
+        margin-bottom: 0px;
+    }
+}
+
+.search_button {
+    @extend .primary-button;
+    white-space: nowrap;
+    margin-right: auto;
+    margin-left: $m3;
+}

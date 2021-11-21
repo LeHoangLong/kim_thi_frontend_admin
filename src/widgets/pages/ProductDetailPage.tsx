@@ -13,7 +13,6 @@ import { ProductDetailModel } from "../../models/ProductDetailModel";
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks";
 import { push } from "../../reducers/ErrorReducer";
 import { EErrorLevel } from "../../models/ErrorModel";
-import Locator from "../../services/Locator";
 import { IProductRepository } from "../../repositories/IProductRepository";
 import Services from "../../config/Services";
 import { fetchingProductDetail, fetchedProductDetail, errorProductDetail, replaceProductDetailById } from "../../reducers/ProductDetailReducer";
@@ -26,6 +25,7 @@ import { IImageRepository } from "../../repositories/IImageRepository";
 import { CategoryGallery } from "../fragments/CategoryGallery";
 import { ProductCategoryModel } from "../../models/ProductCategoryModel";
 import styles from './ProductDetailPage.module.scss'
+import myContainer from "../../container";
 
 const update = require('update-immutable').default
 
@@ -65,8 +65,8 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
     let dispatch = useAppDispatch()
 
-    let productRepository = Locator.get<IProductRepository>(Services.PRODUCT_REPOSITORY)
-    let imageRepository = Locator.get<IImageRepository>(Services.IMAGE_REPOSITORY)
+    let productRepository = myContainer.get<IProductRepository>(Services.PRODUCT_REPOSITORY)
+    let imageRepository = myContainer.get<IImageRepository>(Services.IMAGE_REPOSITORY)
     let images = useAppSelector(state => state.images.images)
     let productDetails = useAppSelector(state => state.productDetails.products)
 

@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import Services from '../../config/Services';
+import myContainer from '../../container';
 import { useAppDispatch } from '../../hooks/Hooks';
 import { error, loggedIn, loggingIn } from '../../reducers/UserReducer';
 import { IUserRepository, IUserRepositoryErrorAuthenticationFailed } from '../../repositories/IUserRepository';
-import Locator from '../../services/Locator';
 import styles from './LoginPage.module.scss';
 
 export const LoginPage = () => {
@@ -11,7 +11,7 @@ export const LoginPage = () => {
     let [password, setPassword] = useState('');
 
     let dispatch = useAppDispatch();
-    let userRepository = Locator.get<IUserRepository>(Services.USER_REPOSITORY);
+    let userRepository = myContainer.get<IUserRepository>(Services.USER_REPOSITORY);
     async function onLoginHandler() {
         dispatch(loggingIn());
         try {

@@ -1,15 +1,17 @@
+import { injectable } from "inversify";
 import { NotFound } from "../exceptions/NotFound";
 import { delay } from "../helpers/delay";
 import { DistanceBasedTransportFeeOrigin, AreaTransportSummary, AreaTransportFee } from "../models/TransportFee";
 import { CreateAreaTransportFeeArgs, ITransportFeeRepository } from "./ITransportFeeRepository";
 
+@injectable()
 export class MockTransportFeeRepository implements ITransportFeeRepository {
     public origins: DistanceBasedTransportFeeOrigin[] = []
     public fees: AreaTransportFee[] = []
     constructor(
         numberOfOrigins: number = 100,
         numberOfFees: number = 100,
-        public delayMs: number = 1000,
+        public delayMs: number = 0,
     ) {
         for (let i = 0; i < numberOfOrigins; i++) {
             this.origins.push({

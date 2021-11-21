@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import Services from "../../config/Services";
+import myContainer from "../../container";
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel";
 import { loggedIn, loggedOut, fetchingUser } from "../../reducers/UserReducer";
 import { IUserRepository } from "../../repositories/IUserRepository";
-import Locator from "../../services/Locator";
 import Loading from "../components/Loading";
 import { LoginPage } from "../pages/LoginPage"
 import { Router } from "./Router";
@@ -19,7 +19,7 @@ export const UserStateListener = () => {
     useEffect(() => {
         async function init() {
             dispatch(fetchingUser());
-            let userRepository = Locator.get<IUserRepository>(Services.USER_REPOSITORY);
+            let userRepository = myContainer.get<IUserRepository>(Services.USER_REPOSITORY);
             let user = await userRepository!.getUser();
             if (user !== null) {
                 dispatch(loggedIn(user));

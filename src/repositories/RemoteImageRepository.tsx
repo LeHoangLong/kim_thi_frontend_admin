@@ -1,9 +1,11 @@
 import axios, { AxiosError } from "axios";
+import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
 import { NotFound } from "../exceptions/NotFound";
 import { ImageModel } from "../models/ImageModel";
 import { IImageRepository } from "./IImageRepository";
 
+@injectable()
 export class RemoteImageRepository implements IImageRepository {
     async fetchImages(offset: number, limit: number) : Promise<ImageModel[]> {
         try {

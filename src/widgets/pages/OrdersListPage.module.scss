@@ -1,0 +1,32 @@
+@import '../Common.scss';
+
+.table_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.table {
+    border-collapse: collapse;
+    margin-top: $m3;
+    overflow: auto;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.table td, .table th {
+    border: 1px solid $border-color;
+    padding: $p3;
+}
+
+.table th {
+    background-color: $primary-color;
+    color: $on-primary-color;
+}
+
+.order_detail_link {
+    text-decoration: underline;
+    color: $link-color;
+    cursor: pointer;
+}
