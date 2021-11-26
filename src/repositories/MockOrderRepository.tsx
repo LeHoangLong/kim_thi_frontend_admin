@@ -92,11 +92,7 @@ export class MockOrderRepository implements IOrderRepository {
     async fetchOrderSummaries(arg: FetchOrderSummaryArg) : Promise<OrderSummary[]> {
         let ret: OrderSummary[] = []
         let filtered = this.filter(arg)
-        console.log('arg.startId')
-        console.log(arg.startId)
         filtered = filtered.filter(e => e.id >= arg.startId)
-        console.log('filtered')
-        console.log(filtered)
         for (let i = arg.offset; i < filtered.length && i < arg.offset + arg.limit; i++) {
             ret.push(filtered[i])
         }

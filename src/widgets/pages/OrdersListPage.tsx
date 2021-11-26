@@ -72,9 +72,6 @@ export const OrdersListPage = (props: OrdersListPageProps) => {
             }
 
             let firstUnknownIndex = lastKnowIndex + 1
-            console.log('offset')
-            console.log(minIndex - firstUnknownIndex)
-
             let fetchedOrders = await orderRepository.fetchOrderSummaries({
                 ...props.filterArg,
                 offset: minIndex - firstUnknownIndex,
@@ -82,8 +79,6 @@ export const OrdersListPage = (props: OrdersListPageProps) => {
                 startId: startId,
             })
 
-            console.log('fetchedOrders')
-            console.log(fetchedOrders)
             let newOrderSummaries = [...orderSummaries]
             for (let i = newOrderSummaries.length; i < maxIndex ; i++) {
                 newOrderSummaries.push(undefined)

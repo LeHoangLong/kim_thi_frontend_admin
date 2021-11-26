@@ -12,3 +12,13 @@ export function EProductUnitToString(unit: EProductUnit) {
             throw new UnrecognizedEnumValue( unit ) 
     }
 }
+
+export function stringToEProductUnit(unit: string) : EProductUnit {
+    unit = unit.toLowerCase()
+    switch (unit) {
+        case "kg":
+            return EProductUnit.KG
+        default:
+            throw new UnrecognizedEnumValue( unit ) 
+    }
+}

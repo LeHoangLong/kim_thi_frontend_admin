@@ -1,10 +1,30 @@
-import axios, { AxiosError } from "axios";
+import 'reflect-metadata';
 import { injectable } from "inversify";
-import { jsonSchema } from "uuidv4";
 import { HOST_URL } from "../config/Url";
 import { axiosDelete, axiosGet, axiosPost, axiosPut } from "../helpers/axios";
 import { DistanceBasedTransportFeeOrigin, AreaTransportSummary, AreaTransportFee } from "../models/TransportFee";
 import { CreateAreaTransportFeeArgs, ITransportFeeRepository } from "./ITransportFeeRepository";
+
+
+export function jsonToTransportFeeSummary(json: any): AreaTransportSummary {
+    return {
+        id: json.id,
+        name: json.name,
+        city: json.areaCity,
+    }
+}
+
+export function jsonToTransportFeeDetail(json: any): AreaTransportFee {
+    return {
+        id: json.id,
+        name: json.name,
+        city: json.areaCity,
+        basicFee: json.basicFee,
+        billBasedTransportFee: json.billBasedTransportFee,
+        distanceFeePerKm: json.distanceFeePerKm,
+        originIds: json.transportOriginIds,
+    }
+}
 
 @injectable()
 export class RemoteTransportFeeRepository implements ITransportFeeRepository {
@@ -54,39 +74,19 @@ export class RemoteTransportFeeRepository implements ITransportFeeRepository {
         })
         let ret: AreaTransportSummary[] = []
         for (let i = 0; i < response.data.length; i++) {
-            ret.push(this.jsonToTransportFeeSummary(response.data[i]))
+            ret.push(jsonToTransportFeeSummary(response.data[i]))
         }
         return ret
     }
 
-    jsonToTransportFeeSummary(json: any): AreaTransportSummary {
-        return {
-            id: json.id,
-            name: json.name,
-            city: json.areaCity,
-        }
-    }
-    
-    jsonToTransportFeeDetail(json: any): AreaTransportFee {
-        return {
-            id: json.id,
-            name: json.name,
-            city: json.areaCity,
-            basicFee: json.basicFee,
-            billBasedTransportFee: json.billBasedTransportFee,
-            distanceFeePerKm: json.distanceFeePerKm,
-            originIds: json.transportOriginIds,
-        }
-    }
-
     async fetchTransportFee(id: number): Promise<AreaTransportFee> {
         let response = await axiosGet(`${HOST_URL}/transport_fees/${id}`)
-        return this.jsonToTransportFeeDetail(response.data)
+        return jsonToTransportFeeDetail(response.data)
     }
 
     async createTransportFee(args: CreateAreaTransportFeeArgs): Promise<AreaTransportFee> {
         let response = await axiosPost(`${HOST_URL}/transport_fees`, this.convertToBackendCompatible(args))
-        return this.jsonToTransportFeeDetail(response.data)
+        return jsonToTransportFeeDetail(response.data)
     }
 
     async deleteTransportFee(id: number): Promise<void> {
@@ -95,7 +95,7 @@ export class RemoteTransportFeeRepository implements ITransportFeeRepository {
 
     async updateTransportFee(id: number, args: CreateAreaTransportFeeArgs): Promise<AreaTransportFee> {
         let response = await axiosPut(`${HOST_URL}/transport_fees/${id}`, this.convertToBackendCompatible(args))
-        return this.jsonToTransportFeeDetail(response.data)
+        return jsonToTransportFeeDetail(response.data)
     }
 
     private convertToBackendCompatible(args: CreateAreaTransportFeeArgs) : any {

@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
 import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
