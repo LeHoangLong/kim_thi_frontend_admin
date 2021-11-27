@@ -36,6 +36,7 @@
     "redux": "^4.1.0",
     "redux-toolkit": "^1.1.2",
     "reflect-metadata": "^0.1.13",
+    "serve": "^13.0.2",
     "typescript": "^4.3.2",
     "update-immutable": "^1.5.0",
     "uuid": "^8.3.2",
@@ -46,7 +47,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "prod": "serve -s build"
   },
   "eslintConfig": {
     "extends": [
