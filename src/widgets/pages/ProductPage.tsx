@@ -49,6 +49,7 @@ export const ProductPage = () => {
 
     useEffect(() => {
         async function init() {
+            console.log('init')
             dispatch(clear())
             dispatch(fetching())
             try {
@@ -68,7 +69,7 @@ export const ProductPage = () => {
             }
         }
         init()
-    }, [dispatch, productRepository])
+    }, [dispatch])
 
     useEffect(() => {
         if (productSummaryStatus.status === EStatus.IN_PROGRESS) {

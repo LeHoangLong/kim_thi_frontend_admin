@@ -9,7 +9,7 @@ export const Dashboard = () => {
     let [renderedMenus, setRenderedMenus] = useState<string[]>(["Đơn hàng"])
     let [selectedMenu, setSelectedMenu] = useState(0)
 
-    const sidebarMenus : string[] = [ "Phí vận chuyển", "Sản phẩm", "Đơn hàng"]
+    const sidebarMenus : string[] = [ "Đơn hàng", "Sản phẩm", "Phí vận chuyển" ]
 
     function onMenuSelected(menu: string) {
         setSelectedMenu(sidebarMenus.indexOf(menu))
@@ -30,7 +30,7 @@ export const Dashboard = () => {
                 <ProductPage></ProductPage>
             </ConditionalRendering>
         </div>
-        <div key={3} style={{ display: selectedMenu === 1? 'block' : 'none' }} className="h-100pc">
+        <div key={3} style={{ display: selectedMenu === 2? 'block' : 'none' }} className="h-100pc">
             <ConditionalRendering display={ renderedMenus.indexOf("Phí vận chuyển") !== -1 }>
                 <TransportFeePage/>
             </ConditionalRendering>
