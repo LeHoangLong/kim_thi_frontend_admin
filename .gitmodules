@@ -1,0 +1,3 @@
+[submodule "components"]
+	path = src/widgets/components
+	url = git@github.com:LeHoangLong/kim_thi_frontend_components.git
