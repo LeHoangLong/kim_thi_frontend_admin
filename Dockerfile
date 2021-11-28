@@ -8,6 +8,8 @@ RUN npm install
 
 COPY . .
 
+ENV PUBLIC_URL /admin
+
 RUN npm run build
 
 ENV PORT 80
