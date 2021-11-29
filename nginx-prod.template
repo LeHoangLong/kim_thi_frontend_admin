@@ -21,7 +21,11 @@ server {
     listen $PORT;
     server_name $DOMAIN;
 
+	location = /admin {
+		try_files /opt/app/build/index.html =404;
+	}
+	
 	location /admin {
-		alias /opt/app/build/;
+		alias /opt/app/build/$1;
 	}
 }
