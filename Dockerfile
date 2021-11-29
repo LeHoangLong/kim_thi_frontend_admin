@@ -1,12 +1,12 @@
 FROM lehoanglong/nodejs:14
 
-WORKDIR /usr/src/app
-
-COPY package*.json ./
-
-RUN npm install
+WORKDIR /opt/app
 
 COPY . .
+
+RUN apt update && apt install nginx gettext-base bash -y
+
+RUN npm install
 
 ENV PUBLIC_URL /admin
 
@@ -14,4 +14,4 @@ RUN npm run build
 
 ENV PORT 80
 
-CMD npm run prod
+CMD /opt/app/scripts/tmux-prod.sh
