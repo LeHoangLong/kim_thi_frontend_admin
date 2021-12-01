@@ -20,14 +20,14 @@
 server {
     listen $PORT;
     server_name $DOMAIN;
+	root /opt/app/build
 
 	location / {
-		try_files /opt/app/build/index.html =405;
+		try_files /opt/app/build =405;
 	}
 
 	location = /admin {
-		alias /opt/app/build;
-		try_files index.html =404;
+		try_files /index.html =404;
 	}
 	
 	location /admin {
