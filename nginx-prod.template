@@ -22,7 +22,7 @@ server {
     server_name $DOMAIN;
 
 	location / {
-		try_files /opt/app/build/index.html =404;
+		try_files /opt/app/build/index.html =405;
 	}
 
 	location = /admin {
