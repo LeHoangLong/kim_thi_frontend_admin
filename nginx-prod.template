@@ -23,7 +23,7 @@ server {
 	root /opt/app/build;
 
 	location / {
-		try_files /opt/app/build =405;
+		try_files /index.html =404;
 	}
 
 	location = /admin {
