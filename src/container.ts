@@ -19,12 +19,12 @@ import { RemoteUserRepository } from './repositories/RemoteUserRepository'
 
 let myContainer = new Container()
 
-myContainer.bind<ITransportFeeRepository>(Symbols.TRANSPORT_FEE_REPOSITORY).to(RemoteTransportFeeRepository)
-myContainer.bind<IUserRepository>(Symbols.USER_REPOSITORY).to(RemoteUserRepository)
-myContainer.bind<IProductRepository>(Symbols.PRODUCT_REPOSITORY).to(RemoteProductRepository)
-myContainer.bind<IImageRepository>(Symbols.IMAGE_REPOSITORY).to(RemoteImageRepository)
-myContainer.bind<IProductCategoryRepository>(Symbols.PRODUCT_CATEGORY_REPOSITORY).to(RemoteProductCategoryRepository)
-myContainer.bind<IOrderRepository>(Symbols.ORDER_REPOSITORY).to(RemoteOrderRepository)
+myContainer.bind<ITransportFeeRepository>(Symbols.TRANSPORT_FEE_REPOSITORY).to(RemoteTransportFeeRepository).inSingletonScope()
+myContainer.bind<IUserRepository>(Symbols.USER_REPOSITORY).to(RemoteUserRepository).inSingletonScope()
+myContainer.bind<IProductRepository>(Symbols.PRODUCT_REPOSITORY).to(RemoteProductRepository).inSingletonScope()
+myContainer.bind<IImageRepository>(Symbols.IMAGE_REPOSITORY).to(RemoteImageRepository).inSingletonScope()
+myContainer.bind<IProductCategoryRepository>(Symbols.PRODUCT_CATEGORY_REPOSITORY).to(RemoteProductCategoryRepository).inSingletonScope()
+myContainer.bind<IOrderRepository>(Symbols.ORDER_REPOSITORY).to(RemoteOrderRepository).inSingletonScope()
 
 // let mockProductCategoryRepository = new MockProductCategoryRepository(5)
 // myContainer.rebind<IProductCategoryRepository>(Symbols.PRODUCT_CATEGORY_REPOSITORY).toConstantValue(mockProductCategoryRepository)
