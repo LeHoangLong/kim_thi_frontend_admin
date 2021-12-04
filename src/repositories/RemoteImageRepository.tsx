@@ -8,6 +8,13 @@ import { IImageRepository } from "./IImageRepository";
 
 @injectable()
 export class RemoteImageRepository implements IImageRepository {
+    private normalizeImagePath(path: string) : string {
+        if (!path.includes('http')) {
+            path = HOST_URL + '/' + path
+        }
+        return path
+    }
+
     async fetchImages(offset: number, limit: number) : Promise<ImageModel[]> {
         try {
             let response = await axios.get(`${HOST_URL}/images/`)
@@ -16,7 +23,7 @@ export class RemoteImageRepository implements IImageRepository {
                 let imageJson = response.data[i]
                 ret.push({
                     id: imageJson['id'],
-                    path: HOST_URL + "/" + imageJson['path'],
+                    path: this.normalizeImagePath(imageJson['path']),
                 })
             }
             return ret
@@ -46,7 +53,7 @@ export class RemoteImageRepository implements IImageRepository {
             let imageJson = response.data
             return {
                 id: imageJson['id'],
-                path: HOST_URL + "/" + imageJson['path'],
+                path: this.normalizeImagePath(imageJson['path']),
             }
         } catch (exception) {
             let axioException = exception as AxiosError
@@ -60,7 +67,7 @@ export class RemoteImageRepository implements IImageRepository {
             let imageJson = response.data
             return {
                 id: imageJson['id'],
-                path: HOST_URL + "/" + imageJson['path'],
+                path: this.normalizeImagePath(imageJson['path']),
             }
         } catch (exception) {
             let axioException = exception as AxiosError
