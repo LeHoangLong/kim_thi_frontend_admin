@@ -87,7 +87,7 @@ export const ImageGallery = (props : ImageGalleryProps) => {
         if (imageState.status === EStatus.INIT) {
             init()
         }
-    }, [dispatch, imageRepository, imageState])
+    }, [dispatch, imageState])
 
     return <article className="image-gallery">
         <input onChange={ onFileSelected } ref={ fileInput } type="file" style={{ display: 'none' }}></input>
