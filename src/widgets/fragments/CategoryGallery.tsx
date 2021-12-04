@@ -36,7 +36,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
             }
         }
         init()
-    }, [ categoriesState.status, productCategoryRepository ])
+    }, [ categoriesState.status ])
 
     useEffect(() => {
         if (categoriesState.status.status === EStatus.IN_PROGRESS) {
@@ -109,7 +109,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
                 { displayCategories() }
             </select>
             <div className="new-category-row">
-                <input onChange={e => setNewCategory(e.target.value) } value={ newCategory } className="body-text-1 new-category-input" type="text" placeholder="Tạo danh mục mới"></input>
+                <input onChange={e =>  setNewCategory(e.target.value)} value={ newCategory } className="body-text-1 new-category-input" type="text" placeholder="Tạo danh mục mới"></input>
                 <button onClick={ createNewCategory } className="body-text-1 primary-button"> Tạo </button>
             </div>
         </section>
