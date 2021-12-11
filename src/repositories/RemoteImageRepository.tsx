@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
 import { injectable } from "inversify";
-import { HOST_URL } from "../config/Url";
+import { FILESERVER_URL, HOST_URL } from "../config/Url";
 import { NotFound } from "../exceptions/NotFound";
 import { ImageModel } from "../models/ImageModel";
 import { IImageRepository } from "./IImageRepository";
@@ -10,7 +10,7 @@ import { IImageRepository } from "./IImageRepository";
 export class RemoteImageRepository implements IImageRepository {
     private normalizeImagePath(path: string) : string {
         if (!path.includes('http')) {
-            path = HOST_URL + '/' + path
+            path = FILESERVER_URL + '/' + path
         }
         return path
     }

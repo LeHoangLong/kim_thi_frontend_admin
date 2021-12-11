@@ -1,11 +1,24 @@
 import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
 import { injectable } from "inversify";
-import { HOST_URL } from "../config/Url";
+import { FILESERVER_URL, HOST_URL } from "../config/Url";
 import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
 import { ProductSummaryModel } from "../models/ProductSummaryModel";
 import { IProductRepository } from "./IProductRepository";
+import { ImageModel } from '../models/ImageModel';
+
+export function jsonToImageModel(json: any) : ImageModel {
+    let path = json['path']
+    if (!path.includes('http')) {
+        path = FILESERVER_URL + '/' + path 
+    }
+    return {
+        id: json['id'],
+        path: path,
+    }
+}
+
 
 @injectable()
 export class RemoteProductRepository implements IProductRepository {
@@ -25,10 +38,7 @@ export class RemoteProductRepository implements IProductRepository {
                     id: result.product.id,
                     serialNumber: result.product.serialNumber,
                     name: result.product.name,
-                    avatar: {
-                        ...result.avatar,
-                        path: HOST_URL + "/" + result.avatar.path,
-                    },
+                    avatar: jsonToImageModel(result.avatar),
                 });
             }
             return ret;
@@ -78,10 +88,7 @@ export class RemoteProductRepository implements IProductRepository {
             defaultPrice: defaultPrice,
             alternativePrices: alternativePrices,
             name: json.product.name,
-            avatar: {
-                ...json.avatar,
-                path: HOST_URL + "/" + json.avatar.path,
-            },
+            avatar: jsonToImageModel(json.avatar),
             rank: json.product.rank,
             categories: categories,
             wholesalePrices: json.product.wholesalePrices,

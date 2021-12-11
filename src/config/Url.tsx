@@ -6,7 +6,7 @@ if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
 } else {
     // production code
     _BACKEND_URL = "https://cuahangnhuquynh.com/backend"
-    _FILESERVER_URL = 'https://cuahangnhuquynh.com/backend'
+    _FILESERVER_URL = 'https://storage.googleapis.com/kim-thi'
 }
 
 export const HOST_URL = _BACKEND_URL;
