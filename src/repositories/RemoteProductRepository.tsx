@@ -7,6 +7,8 @@ import { ProductDetailModel } from "../models/ProductDetailModel";
 import { ProductSummaryModel } from "../models/ProductSummaryModel";
 import { IProductRepository } from "./IProductRepository";
 import { ImageModel } from '../models/ImageModel';
+import { PriceLevel, ProductPrice } from '../models/ProductPrice';
+import Decimal from 'decimal.js';
 
 export function jsonToImageModel(json: any) : ImageModel {
     let path = json['path']
@@ -19,6 +21,28 @@ export function jsonToImageModel(json: any) : ImageModel {
     }
 }
 
+
+export function jsonToPriceLevel(json: any) : PriceLevel {
+    return {
+        minQuantity: parseInt(json['minQuantity']), 
+        price: parseInt(json['price'])
+    }
+}
+
+export function jsonToProductPrice(json: any) : ProductPrice {
+    let ret: ProductPrice =   {
+        unit: (json['unit'] as string).toLowerCase(),
+        isDefault: json['isDefault'],
+        defaultPrice: parseInt(json['defaultPrice']),
+        priceLevels: [],
+    }
+
+    for (let i = 0; i < json['priceLevels'].length; i++) {
+        ret.priceLevels.push(jsonToPriceLevel(json['priceLevels'][i]))
+    }
+
+    return ret
+}
 
 @injectable()
 export class RemoteProductRepository implements IProductRepository {
@@ -75,12 +99,17 @@ export class RemoteProductRepository implements IProductRepository {
     }
 
     jsonToProductDetail(json: any) : ProductDetailModel {
-        let defaultPrice = json.prices.find((e: any) => e.isDefault)
-        let alternativePrices = json.prices.filter((e: any) => !e.isDefault)
+        let defaultPrice : ProductPrice = json.prices.find((e: any) => e.isDefault)
+        let alternativePrices : ProductPrice[] = json.prices.filter((e: any) => !e.isDefault)
         let categories : ProductCategoryModel[] = []
         for (let i = 0; i < json.categories.length; i++) {
             categories.push(this.jsonToCategory(json.categories[i]))
         }
+
+        for (let i = 0; i < alternativePrices.length; i++) {
+            alternativePrices[i] = jsonToProductPrice(alternativePrices[i])
+        }
+        defaultPrice = jsonToProductPrice(defaultPrice)
 
         let productDetail = {
             id: json.product.id,

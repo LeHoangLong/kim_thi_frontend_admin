@@ -282,24 +282,22 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setPrices(newPrices)
     }
 
-    function displayPriceLevels() : React.ReactNode[] {
+    function displayPriceLevels(productIndex: number, priceLevels: PriceLevel[]) : React.ReactNode[] {
         let ret : React.ReactNode[] = []
-        for (let i = 0; i < prices.length; i++) {
-            for (let j = 0; j < prices[i].priceLevels.length; j++) {
-                ret.push(
-                    <div key={ i + "_" + j }>
-                        <div>
-                            { prices[i].priceLevels[j].minQuantity }
-                        </div>
-                        <div>
-                            { prices[i].priceLevels[j].price.toLocaleString('en') }
-                        </div>
-                        <IconButton onClick={ () => removePriceLevel(i, j)  }>
-                            <i className="fas fa-times"></i>
-                        </IconButton>
+        for (let j = 0; j < priceLevels.length; j++) {
+            ret.push(
+                <div key={ j }>
+                    <div>
+                        { priceLevels[j].minQuantity }
                     </div>
-                )
-            }
+                    <div>
+                        { priceLevels[j].price.toLocaleString('en') }
+                    </div>
+                    <IconButton onClick={ () => removePriceLevel(productIndex, j)  }>
+                        <i className="fas fa-times"></i>
+                    </IconButton>
+                </div>
+            )
         }
         return ret
     }
@@ -373,10 +371,11 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         onDefaultPriceChanged: (value: number) => void,
         isDefault: boolean,
         onIsDefaultChanged: (value: boolean) => void,
+        productIndex?: number, 
         priceLevels?: PriceLevel[],
         onNewPriceLevelClicked?: () => void,
     ) : React.ReactNode {
-        return <form className="display-price-form">
+        return <form className="display-price-form" onSubmit={e => { e.preventDefault(); onNewPriceCreated(); }}>
             <div>
                 <label htmlFor="unit">Đơn vị</label>
                 <select value={ unit } onChange={(e) => onUnitChanged(e.target.value) } id="unit">
@@ -392,7 +391,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 <input type="checkbox" checked={ isDefault } onChange={e => onIsDefaultChanged(e.target.checked)}></input>
             </div>
             {(() => {
-                if (priceLevels !== undefined) {
+                if (priceLevels !== undefined && productIndex !== undefined) {
                    return <Fragment>
                         <div className="display-price-levels">
                             <div>
@@ -400,7 +399,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                                 <label>Giá</label>
                                 <div className="dummy">&nbsp;</div>
                             </div>
-                            { displayPriceLevels() }
+                            { displayPriceLevels(productIndex, priceLevels) }
                         </div>
                         <button className="add-price-level" onClick={ onNewPriceLevelClicked }>
                             <i className="fas fa-plus"></i>
@@ -500,6 +499,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                         (value) => updatePriceDefaultValue(i, value),
                         price.isDefault,
                         (value) => updatePriceIsDefault(i),
+                        i,
                         price.priceLevels,
                         () => onAddPriceLevelButtonClicked(i)
                     ) }
