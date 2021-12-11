@@ -9,7 +9,7 @@
 .form {
     padding: $m3;
     display: grid;
-    grid-template-columns: 1fr max-content;
+    grid-template-columns: minmax(auto, max-content) max-content;
     column-gap: $m3;
     row-gap: $m3;
 
