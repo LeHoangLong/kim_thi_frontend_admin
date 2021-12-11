@@ -292,7 +292,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                             { prices[i].priceLevels[j].minQuantity }
                         </div>
                         <div>
-                            { prices[i].priceLevels[j].price.toLocaleString() }
+                            { prices[i].priceLevels[j].price.toLocaleString('en') }
                         </div>
                         <IconButton onClick={ () => removePriceLevel(i, j)  }>
                             <i className="fas fa-times"></i>
@@ -630,71 +630,71 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         { isLoading? 
             <Loading></Loading> : 
             <main className="product-detail-page"> 
-            <article>
-                <h4 className="title">Thông tin chung</h4>
-                <form>
-                    <label htmlFor="product-id-input">
-                        <p className="h5">Mã sản phẩm</p>
-                    </label>
-                    <input value={ productSerialNumber } onChange={evt => setProductSerialNumber(evt.target.value) } className="form-text-input h5" type="text" id="product-id-input"></input>
+                <article>
+                    <h4 className="title">Thông tin chung</h4>
+                    <form>
+                        <label htmlFor="product-id-input">
+                            <p className="h5">Mã sản phẩm</p>
+                        </label>
+                        <input value={ productSerialNumber } onChange={evt => setProductSerialNumber(evt.target.value) } className="form-text-input h5" type="text" id="product-id-input"></input>
 
-                    <label htmlFor="product-name-input">
-                        <p className="h5 required-label">Tên sản phẩm</p>
-                    </label>
-                    <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input h5" type="text" id="product-name-input"></input>
-                </form>
-            </article>
+                        <label htmlFor="product-name-input">
+                            <p className="h5 required-label">Tên sản phẩm</p>
+                        </label>
+                        <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input h5" type="text" id="product-name-input"></input>
+                    </form>
+                </article>
 
-            <article className="product-categories">
-                <h4 className="title">Danh mục</h4>
-                { displayCategories() }
+                <article className="product-categories">
+                    <h4 className="title">Danh mục</h4>
+                    { displayCategories() }
 
-                <button className="primary-button add-unit-button" onClick={ displayCategoryGallery }>
-                    <i className="fas fa-plus"></i>
-                    <div> Thêm danh mục </div>
-                </button>
-            </article>
+                    <button className="primary-button add-unit-button" onClick={ displayCategoryGallery }>
+                        <i className="fas fa-plus"></i>
+                        <div> Thêm danh mục </div>
+                    </button>
+                </article>
 
-            <article>
-                <h4 className="title">Đơn vị tính / giá bán lẻ</h4>
-                { displayPrices() }
-                <button className="primary-button add-unit-button" onClick={ () => setShowPriceModal(true) }>
-                    <i className="fas fa-plus"></i>
-                    <div> Thêm đơn vị </div>
-                </button>
-            </article>
+                <article>
+                    <h4 className="title">Đơn vị tính / giá bán lẻ</h4>
+                    { displayPrices() }
+                    <button className="primary-button add-unit-button" onClick={ () => setShowPriceModal(true) }>
+                        <i className="fas fa-plus"></i>
+                        <div> Thêm đơn vị </div>
+                    </button>
+                </article>
 
-            <article>
-                <h4 className="title">Giá sỉ</h4>
-                <ul>
-                    { displayWholesalePrices() }
-                </ul>
-                <button className="primary-button add-unit-button" onClick={ onNewWholesalePriceButtonClicked }>
-                    <i className="fas fa-plus"></i>
-                    <div> Thêm giá </div>
-                </button>
-            </article>
+                <article>
+                    <h4 className="title">Giá sỉ</h4>
+                    <ul>
+                        { displayWholesalePrices() }
+                    </ul>
+                    <button className="primary-button add-unit-button" onClick={ onNewWholesalePriceButtonClicked }>
+                        <i className="fas fa-plus"></i>
+                        <div> Thêm giá </div>
+                    </button>
+                </article>
 
-            <article>
-                <h4 className="title">HÌnh ảnh</h4>
-                <div style={{ display: 'none' }} className="add-image">
-                    <IconButton onClick={ onAddImageClick } className="add-image-button">
-                        <h4>
-                            <i className="fas fa-plus"></i>
-                        </h4>
-                    </IconButton>
-                    { showImages() }
-                </div>
-                <div className="select-avatar">
-                    <h6>Ảnh đại diện</h6>
-                    {(() => {
-                        if (avatar !== null) {
-                            return <img alt={ avatar.path } src={ avatar.path }></img>
-                        }
-                    })()}
-                    <button className="primary-button" onClick={() => setShowAvatarModal(true)}>Chọn</button>
-                </div>
-            </article>
+                <article>
+                    <h4 className="title">HÌnh ảnh</h4>
+                    <div style={{ display: 'none' }} className="add-image">
+                        <IconButton onClick={ onAddImageClick } className="add-image-button">
+                            <h4>
+                                <i className="fas fa-plus"></i>
+                            </h4>
+                        </IconButton>
+                        { showImages() }
+                    </div>
+                    <div className="select-avatar">
+                        <h6>Ảnh đại diện</h6>
+                        {(() => {
+                            if (avatar !== null) {
+                                return <img alt={ avatar.path } src={ avatar.path }></img>
+                            }
+                        })()}
+                        <button className="primary-button" onClick={() => setShowAvatarModal(true)}>Chọn</button>
+                    </div>
+                </article>
             </main>
         }
     </section>

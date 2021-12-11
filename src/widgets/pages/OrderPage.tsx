@@ -111,7 +111,7 @@ export const OrderPage = () => {
                 <OrdersListPage filterArg={ filterArg } onBack={() => setDisplayOrdersPage(false)}></OrdersListPage>
             </ConditionalRendering>
         </PageTransition>
-        <section>
+        <section className={ styles.order_page } style={{ overflowY: displayOrdersPage? 'hidden' : 'auto' }}>
             <form onSubmit={ onFormSubmitHandler }>
                 <div className={ styles.form }>
                     <div>

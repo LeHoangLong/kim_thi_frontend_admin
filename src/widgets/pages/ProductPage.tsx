@@ -49,7 +49,6 @@ export const ProductPage = () => {
 
     useEffect(() => {
         async function init() {
-            console.log('init')
             dispatch(clear())
             dispatch(fetching())
             try {
@@ -162,7 +161,7 @@ export const ProductPage = () => {
     }
     
     return <div className="product-page">
-        <section>
+        <section style={{ overflowY: showProductDetailPage? 'hidden' : 'auto' }}>
             {(() => {
                 if (isLoading) {
                     return <div className="loading-container">

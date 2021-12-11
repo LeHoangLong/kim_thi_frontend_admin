@@ -1,9 +1,15 @@
 @import '../Common.scss';
 
+.order_page {
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+}
+
 .form {
     padding: $m3;
     display: grid;
-    grid-template-columns: max-content 1fr;
+    grid-template-columns: 1fr max-content;
     column-gap: $m3;
     row-gap: $m3;
 
