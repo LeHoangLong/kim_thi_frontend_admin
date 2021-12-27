@@ -63,6 +63,8 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let [editingWholesalePrice, setEditingWholesalePrice] = useState('')
     let [editingWholesalePriceIndex, setEditingWholesalePriceIndex] = useState(-1)
 
+    let [description, setDescription] = useState('')
+
     let dispatch = useAppDispatch()
 
     let productRepository = myContainer.get<IProductRepository>(Services.PRODUCT_REPOSITORY)
@@ -90,6 +92,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 rank: 0,
                 categories: productCategories,
                 wholesalePrices: wholesalePrices,
+                description,
             }
 
             try {
@@ -189,6 +192,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     setAvatar(productDetail.avatar)
                     setProductCategories([...productDetail.categories])
                     setWholesalePrices(productDetail.wholesalePrices)
+                    setDescription(productDetail.description)
                 }
             } else {
                 clearAll()
@@ -204,6 +208,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setProductCategories([])
         setAvatar(null)
         setWholesalePrices([])
+        setDescription("")
     }
 
     useEffect(() => {
@@ -632,7 +637,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
             <main className="product-detail-page"> 
                 <article>
                     <h4 className="title">Thông tin chung</h4>
-                    <form>
+                    <form onSubmit={e => e.preventDefault()} className={ styles.product_general_info_form }>
                         <label htmlFor="product-id-input">
                             <p className="h5">Mã sản phẩm</p>
                         </label>
@@ -642,6 +647,11 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                             <p className="h5 required-label">Tên sản phẩm</p>
                         </label>
                         <input value={ productName } onChange={evt => setProductName(evt.target.value) } className="form-text-input h5" type="text" id="product-name-input"></input>
+
+                        <label htmlFor="product-description-input">
+                            <p className="h5">Miêu tả</p>
+                        </label>
+                        <textarea value={ description } onChange={evt => setDescription(evt.target.value) } className="form-text-input h5" rows={5} id="product-description-input"></textarea>
                     </form>
                 </article>
 

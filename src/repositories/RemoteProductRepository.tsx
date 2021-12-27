@@ -124,6 +124,7 @@ export class RemoteProductRepository implements IProductRepository {
             rank: json.product.rank,
             categories: categories,
             wholesalePrices: json.product.wholesalePrices,
+            description: json.product.description,
         }
 
         return productDetail

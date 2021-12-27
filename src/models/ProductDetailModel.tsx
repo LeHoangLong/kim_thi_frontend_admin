@@ -12,4 +12,5 @@ export interface ProductDetailModel {
     rank: number,
     categories: ProductCategoryModel[],
     wholesalePrices: string[],
+    description: string,
 }

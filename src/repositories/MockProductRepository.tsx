@@ -41,6 +41,7 @@ export class MockProductRepository implements IProductRepository {
                 rank: 0,
                 categories: productCategories,
                 wholesalePrices: [],
+                description: `description-${i}`,
             })
         }
     }

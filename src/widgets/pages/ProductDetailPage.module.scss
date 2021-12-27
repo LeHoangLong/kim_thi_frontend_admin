@@ -26,3 +26,9 @@
 .wholesale_price {
     cursor: pointer;
 }
+
+.product_general_info_form label {
+    font-weight: bold;
+    margin-top: $m3;
+    margin-bottom: $m3;
+}

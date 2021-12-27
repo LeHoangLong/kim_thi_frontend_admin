@@ -6,10 +6,10 @@ import { ProductPage } from "./ProductPage"
 import { TransportFeePage } from "./TransportFeePage"
 
 export const Dashboard = () => {
-    let [renderedMenus, setRenderedMenus] = useState<string[]>(["Đơn hàng"])
-    let [selectedMenu, setSelectedMenu] = useState(0)
+    let [renderedMenus, setRenderedMenus] = useState<string[]>(["Sản phẩm"])
+    let [selectedMenu, setSelectedMenu] = useState(1)
 
-    const sidebarMenus : string[] = [ "Đơn hàng", "Sản phẩm" ]
+    const sidebarMenus : string[] = [ "Sản phẩm" ]
 
     function onMenuSelected(menu: string) {
         setSelectedMenu(sidebarMenus.indexOf(menu))
