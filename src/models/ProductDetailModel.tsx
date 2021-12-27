@@ -9,6 +9,7 @@ export interface ProductDetailModel {
     alternativePrices: ProductPrice[],
     name: string,
     avatar: ImageModel,
+    images: ImageModel[],
     rank: number,
     categories: ProductCategoryModel[],
     wholesalePrices: string[],

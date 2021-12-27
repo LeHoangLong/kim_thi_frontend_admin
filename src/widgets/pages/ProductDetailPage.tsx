@@ -41,7 +41,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let [showAvatarModal, setShowAvatarModal] = useState(false)
     let [selectedAvatarImage, setSelectedAvatarImage] = useState<ImageModel[]>([])
     let [showPriceModal, setShowPriceModal] = useState(false)
-    let [selectdImages, setSelectedImages] = useState<ImageModel[]>([])
+    let [selectedImages, setSelectedImages] = useState<ImageModel[]>([])
     let [newlyAddedImages, setNewlyAddedImages] = useState<ImageModel[]>([])
     let [prices, setPrices] = useState<ProductPrice[]>([])
     let [newPriceUnit, setNewPriceUnit] = useState(EPriceUnit.KG)
@@ -62,6 +62,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let [showNewWholesalePrice, setShowNewWholesalePrice] = useState(false)
     let [editingWholesalePrice, setEditingWholesalePrice] = useState('')
     let [editingWholesalePriceIndex, setEditingWholesalePriceIndex] = useState(-1)
+
 
     let [description, setDescription] = useState('')
 
@@ -93,6 +94,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 categories: productCategories,
                 wholesalePrices: wholesalePrices,
                 description,
+                images: newlyAddedImages,
             }
 
             try {
@@ -193,6 +195,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     setProductCategories([...productDetail.categories])
                     setWholesalePrices(productDetail.wholesalePrices)
                     setDescription(productDetail.description)
+                    setNewlyAddedImages(productDetail.images)
                 }
             } else {
                 clearAll()
@@ -209,6 +212,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         setAvatar(null)
         setWholesalePrices([])
         setDescription("")
+        setNewlyAddedImages([])
     }
 
     useEffect(() => {
@@ -224,13 +228,13 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     }
 
     function onImageClicked(image: ImageModel) {
-        let index = selectdImages.indexOf(image)
+        let index = selectedImages.indexOf(image)
         if (index !== -1) {
-            selectdImages.splice(index, 1)
+            selectedImages.splice(index, 1)
         } else {
-            selectdImages.push(image)
+            selectedImages.push(image)
         }
-        setSelectedImages([...selectdImages])
+        setSelectedImages([...selectedImages])
     }
 
     function closeModal() {
@@ -239,18 +243,20 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     }
 
     function onImagesSelected() {
-        let newlyAddedImages : ImageModel[] = []
-        if (props.productId !== undefined) {
-        } else {
-            newlyAddedImages = selectdImages
+        let _newlyAddedImages = [...newlyAddedImages]
+        for (let i = 0; i < selectedImages.length; i++) {
+            if (_newlyAddedImages.findIndex(e => e.id === selectedImages[i].id) === -1) {
+                _newlyAddedImages.push(selectedImages[i])
+            }
         }
-        setNewlyAddedImages(newlyAddedImages)
+        setNewlyAddedImages([..._newlyAddedImages])
         closeModal()
     }
 
     function onRemoveNewlyAddedImage(imageIndex: number) {
-        newlyAddedImages.splice(imageIndex, 1)
-        setNewlyAddedImages([...newlyAddedImages])
+        let _newlyAddedImages = [...newlyAddedImages]
+        _newlyAddedImages.splice(imageIndex, 1)
+        setNewlyAddedImages(_newlyAddedImages)
     }
 
     function showImages() : ReactNode[] {
@@ -591,8 +597,8 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         </header>
         <aside>
             <ConditionalRendering display={ showModal }>
-                <Modal show={ showModal } onOk={ selectdImages.length > 0? onImagesSelected : undefined } onClose={ closeModal }>
-                    <ImageGallery onImageClicked={ onImageClicked } selectedImages={ selectdImages }></ImageGallery>
+                <Modal show={ showModal } onOk={ selectedImages.length > 0? onImagesSelected : undefined } onClose={ closeModal }>
+                    <ImageGallery onImageClicked={ onImageClicked } selectedImages={ selectedImages }></ImageGallery>
                 </Modal>
             </ConditionalRendering>
 
@@ -687,7 +693,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
                 <article>
                     <h4 className="title">HÌnh ảnh</h4>
-                    <div style={{ display: 'none' }} className="add-image">
+                    <div className="add-image">
                         <IconButton onClick={ onAddImageClick } className="add-image-button">
                             <h4>
                                 <i className="fas fa-plus"></i>

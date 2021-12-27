@@ -38,6 +38,16 @@ export class MockProductRepository implements IProductRepository {
                     id: 'image',
                     path: FILESERVER_URL + '/public/products/images/product_images/07633c67-0145-43ee-aa04-f84048f23824',
                 },
+                images: [
+                    {
+                        id: 'image-1',
+                        path: FILESERVER_URL + '/public/products/images/product_images/1c983f9a-35ad-4eb8-9ad8-b3b20dc98400',
+                    },
+                    {
+                        id: 'image-2',
+                        path: FILESERVER_URL + '/public/products/images/product_images/eda36712-d31f-497a-a67d-3d7609304024',
+                    }
+                ],
                 rank: 0,
                 categories: productCategories,
                 wholesalePrices: [],

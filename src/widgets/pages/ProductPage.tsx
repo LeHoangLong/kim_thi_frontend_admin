@@ -160,8 +160,20 @@ export const ProductPage = () => {
         return ret
     }
     
+    let [showMainPage, setShowMainPage] = useState(true)
+    useEffect(() => {
+        if (showProductDetailPage) {
+            let timer = setTimeout(() => {
+                setShowMainPage(true)
+            }, 500)
+            return () => clearTimeout(timer)
+        } else {
+            setShowMainPage(false)
+        }
+    }, [showProductDetailPage])
+
     return <div className="product-page">
-        <section style={{ overflowY: showProductDetailPage? 'hidden' : 'auto' }}>
+        <section style={{ display: showMainPage? 'none' : 'block' }}>
             {(() => {
                 if (isLoading) {
                     return <div className="loading-container">

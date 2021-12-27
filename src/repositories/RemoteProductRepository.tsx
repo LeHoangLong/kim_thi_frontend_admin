@@ -84,7 +84,7 @@ export class RemoteProductRepository implements IProductRepository {
 
     async createProduct(productDetail: ProductDetailModel) : Promise<ProductDetailModel> {
         try {
-            let response = await axios.post(`${HOST_URL}/products/`, productDetail);
+            let response = await axios.post(`${HOST_URL}/products/`, this.productDetailToJson(productDetail));
             return this.jsonToProductDetail(response.data)
         } catch ( exception ) {
             let axioException = exception as AxiosError
@@ -114,7 +114,7 @@ export class RemoteProductRepository implements IProductRepository {
             defaultPrice = jsonToProductPrice(defaultPrice)
         }
 
-        let productDetail = {
+        let productDetail : ProductDetailModel = {
             id: json.product.id,
             serialNumber: json.product.serialNumber,
             defaultPrice: defaultPrice,
@@ -125,6 +125,13 @@ export class RemoteProductRepository implements IProductRepository {
             categories: categories,
             wholesalePrices: json.product.wholesalePrices,
             description: json.product.description,
+            images: []
+        }
+
+        if ('images' in json) {
+            for (let i = 0; i < json.images.length; i++) {
+                productDetail.images.push(jsonToImageModel(json.images[i]))
+            }
         }
 
         return productDetail
@@ -140,9 +147,22 @@ export class RemoteProductRepository implements IProductRepository {
         }
     }
 
+    private productDetailToJson(productDetail: ProductDetailModel) : object {
+        let ret: any = {
+            ...productDetail,
+            imagesId: [],
+        }
+        for (let i = 0 ; i < productDetail.images.length; i++) {
+            ret.imagesId.push(productDetail.images[i].id)
+        }
+        delete ret.images
+        return ret
+    }
+
     async updateProduct(productId: number, productDetail: ProductDetailModel) : Promise<ProductDetailModel> {
         try {
-            let response = await axios.put(`${HOST_URL}/products/${productId}`, productDetail);
+            let json = this.productDetailToJson(productDetail)
+            let response = await axios.put(`${HOST_URL}/products/${productId}`, json);
             let ret = this.jsonToProductDetail(response.data)
             return ret
         } catch ( exception ) {
