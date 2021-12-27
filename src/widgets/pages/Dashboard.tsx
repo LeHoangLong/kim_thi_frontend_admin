@@ -9,7 +9,7 @@ export const Dashboard = () => {
     let [renderedMenus, setRenderedMenus] = useState<string[]>(["Đơn hàng"])
     let [selectedMenu, setSelectedMenu] = useState(0)
 
-    const sidebarMenus : string[] = [ "Đơn hàng", "Sản phẩm", "Phí vận chuyển" ]
+    const sidebarMenus : string[] = [ "Đơn hàng", "Sản phẩm" ]
 
     function onMenuSelected(menu: string) {
         setSelectedMenu(sidebarMenus.indexOf(menu))

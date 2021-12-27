@@ -109,7 +109,10 @@ export class RemoteProductRepository implements IProductRepository {
         for (let i = 0; i < alternativePrices.length; i++) {
             alternativePrices[i] = jsonToProductPrice(alternativePrices[i])
         }
-        defaultPrice = jsonToProductPrice(defaultPrice)
+
+        if (defaultPrice) {
+            defaultPrice = jsonToProductPrice(defaultPrice)
+        }
 
         let productDetail = {
             id: json.product.id,

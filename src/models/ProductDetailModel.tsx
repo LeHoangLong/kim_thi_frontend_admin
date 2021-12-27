@@ -5,7 +5,7 @@ import { ProductPrice } from "./ProductPrice";
 export interface ProductDetailModel {
     id: number | null,
     serialNumber: string,
-    defaultPrice: ProductPrice,
+    defaultPrice: ProductPrice | undefined,
     alternativePrices: ProductPrice[],
     name: string,
     avatar: ImageModel,

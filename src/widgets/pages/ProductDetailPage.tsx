@@ -71,13 +71,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     let productDetails = useAppSelector(state => state.productDetails.products)
 
     async function onOkButtonPressed() {
-        if (prices.length == 0) {
-            dispatch(push({
-                message: "Phải có ít nhất 1 đơn vị tính",
-                level: EErrorLevel.ERROR,
-                timeMs: Date.now(),
-            }))
-        } else if (avatar === null) {
+        if (avatar === null) {
             dispatch(push({
                 message: "Phải chọn ảnh đại diện",
                 level: EErrorLevel.ERROR,
@@ -89,7 +83,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
             let product : ProductDetailModel = {
                 id: null,
                 serialNumber: productSerialNumber,
-                defaultPrice: defaultPrice!,
+                defaultPrice: defaultPrice,
                 alternativePrices: alternativePrices,
                 avatar: avatar!,
                 name: productName,
@@ -171,6 +165,8 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                         productDetail = await productRepository!.fetchProductDetailById(props.productId)
                         dispatch(fetchedProductDetail(productDetail))
                     } catch (exception: any) {
+                        console.log('exception')
+                        console.log(exception)
                         dispatch(errorProductDetail(exception))
                         dispatch(push({
                             level: EErrorLevel.ERROR,
@@ -185,7 +181,11 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 if (productDetail !== undefined) {
                     setProductSerialNumber(productDetail.serialNumber)
                     setProductName(productDetail.name)
-                    setPrices([productDetail.defaultPrice].concat(productDetail.alternativePrices))
+                    if (productDetail.defaultPrice) {
+                        setPrices([productDetail.defaultPrice].concat(productDetail.alternativePrices))
+                    } else {
+                        setPrices(productDetail.alternativePrices)
+                    }
                     setAvatar(productDetail.avatar)
                     setProductCategories([...productDetail.categories])
                     setWholesalePrices(productDetail.wholesalePrices)
