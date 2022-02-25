@@ -1,13 +1,5 @@
-let _BACKEND_URL = "http://localhost/backend"
-let _FILESERVER_URL = "http://localhost/backend" 
-
-if (!process.env.NODE_ENV || process.env.NODE_ENV === 'development') {
-    // dev code
-} else {
-    // production code
-    _BACKEND_URL = "https://cuahangnhuquynh.com/backend"
-    _FILESERVER_URL = 'https://storage.googleapis.com/kim-thi'
-}
+let _BACKEND_URL = process.env.REACT_APP_BACKEND_URL
+let _FILESERVER_URL = process.env.REACT_APP_FILESERVER_URL
 
 export const HOST_URL = _BACKEND_URL;
 export const FILESERVER_URL = _FILESERVER_URL;

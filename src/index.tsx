@@ -8,6 +8,9 @@ import axios from 'axios'
 
 axios.defaults.headers.common['withCredentials'] = true;
 
+console.log('process.env.REACT_APP_BACKEND_URL')
+console.log(process.env.REACT_APP_BACKEND_URL)
+
 ReactDOM.render(
   <React.StrictMode>
     <Helmet>

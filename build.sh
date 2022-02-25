@@ -1,0 +1,4 @@
+docker build\
+ --build-arg ECOMMERCE_ADMIN_BACKEND_URL=${ECOMMERCE_ADMIN_BACKEND_URL}\
+ --build-arg ECOMMERCE_ADMIN_FILESERVER_URL=${ECOMMERCE_ADMIN_FILESERVER_URL}\
+ . -t ecommerce_frontend_admin
