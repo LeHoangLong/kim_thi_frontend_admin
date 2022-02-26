@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Pagination } from "../../config/Pagination"
 import { Symbols } from "../../config/Symbols"
 import myContainer from "../../container"
@@ -96,7 +96,7 @@ export const OrdersListPage = (props: OrdersListPageProps) => {
         if (toFetch && !fetchingPageSet.has(pageNumber)) {
             fetchOrders()
         }
-    }, [orderSummaries, pageNumber])
+    }, [orderSummaries, pageNumber, dispatch, fetchingPageSet, numberOfOrders, orderRepository, props.filterArg])
 
     async function updateOrder(orderId: number, arg: {
         isShipped: boolean,
@@ -230,11 +230,15 @@ export const OrdersListPage = (props: OrdersListPageProps) => {
         }
     }, [numberOfOrdersStatus])
 
+    let onOrderDetailPageBack = useCallback(() => {
+        setShowOrderDetailPage(false)
+    }, [])
+
 
     return <React.Fragment>
         <PageTransition show={ showOrderDetailPage }>
             <ConditionalRendering display={ renderDetailPage }>
-                <OrderDetailPage orderId={ orderId } onBack={() => setShowOrderDetailPage(false)}></OrderDetailPage>
+                <OrderDetailPage orderId={ orderId } onBack={onOrderDetailPageBack}></OrderDetailPage>
             </ConditionalRendering>
         </PageTransition>
         <section style={{ overflow: showOrderDetailPage? 'none' : 'auto'}}>

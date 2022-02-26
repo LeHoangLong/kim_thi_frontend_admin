@@ -1,5 +1,5 @@
 import 'reflect-metadata'
-import axios, { AxiosError } from "axios";
+import axios from "axios";
 import { HOST_URL } from "../config/Url";
 import { Address } from "../models/Address";
 import { CustomerContact } from "../models/CustomerContact";

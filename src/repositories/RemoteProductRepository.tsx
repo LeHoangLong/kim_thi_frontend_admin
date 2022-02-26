@@ -8,7 +8,6 @@ import { ProductSummaryModel } from "../models/ProductSummaryModel";
 import { IProductRepository } from "./IProductRepository";
 import { ImageModel } from '../models/ImageModel';
 import { PriceLevel, ProductPrice } from '../models/ProductPrice';
-import Decimal from 'decimal.js';
 
 export function jsonToImageModel(json: any) : ImageModel {
     let path = json['path']

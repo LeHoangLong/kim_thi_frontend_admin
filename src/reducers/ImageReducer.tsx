@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { ImageModel } from "../models/ImageModel";
-import { EStatus, StatusModel } from "../models/StatusModel";
+import { EStatus } from "../models/StatusModel";
 import { ImageState } from "../states/ImageState";
 
 const initialState : ImageState = {

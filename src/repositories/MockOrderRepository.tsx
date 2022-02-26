@@ -1,11 +1,8 @@
 import 'reflect-metadata'
-import Decimal from "decimal.js";
-import { inject, injectable } from "inversify";
+import { injectable } from "inversify";
 import { OrderModel, OrderSummary } from "../models/OrderModel";
 import { FetchOrderSummaryArg, FilterOrderArg, IOrderRepository } from "./IOrderRepository";
-import { Symbols } from '../config/Symbols';
 import { ITransportFeeRepository } from './ITransportFeeRepository';
-import myContainer from '../container';
 import { NotFound } from '../exceptions/NotFound';
 import { EProductUnit } from '../models/EProductUnit';
 
@@ -21,10 +18,10 @@ export class MockOrderRepository implements IOrderRepository {
                 let fee = await this.repository!.fetchTransportFee(i)
                 this.orders.push({
                     id: i,
-                    isShipped: i % 3 == 0,
-                    isReceived: i % 4 == 0,
-                    isPaid: i % 5 == 2,
-                    isCancelled: i % 5 == 0,
+                    isShipped: i % 3 === 0,
+                    isReceived: i % 4 === 0,
+                    isPaid: i % 5 === 2,
+                    isCancelled: i % 5 === 0,
                     orderTime: yesterday.toISOString(),
                     customerMessage: `message-${i}`,
                     customerContact: {
@@ -128,7 +125,7 @@ export class MockOrderRepository implements IOrderRepository {
 
 
     async fetchOrderDetail(orderId: number) : Promise<OrderModel> {
-        let order = this.orders.find(e => e.id == orderId)
+        let order = this.orders.find(e => e.id === orderId)
         if (order !== undefined) {
             return order
         } else {

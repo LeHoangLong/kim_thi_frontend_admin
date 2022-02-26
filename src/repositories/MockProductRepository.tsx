@@ -1,4 +1,4 @@
-import { FILESERVER_URL, HOST_URL } from '../config/Url';
+import { FILESERVER_URL } from '../config/Url';
 import { NotFound } from '../exceptions/NotFound';
 import { ProductCategoryModel } from '../models/ProductCategoryModel';
 import { ProductDetailModel } from '../models/ProductDetailModel';

@@ -6,7 +6,7 @@ import Services from '../../config/Services'
 import myContainer from '../../container'
 import { useAppDispatch, useAppSelector } from '../../hooks/Hooks'
 import { EStatus } from '../../models/StatusModel'
-import { createOrigin, insertOrigins, insertOriginToMap, setNumberOfOrigins, setOriginStatusState } from '../../reducers/TransportFeeReducer'
+import { createOrigin, insertOrigins, setNumberOfOrigins, setOriginStatusState } from '../../reducers/TransportFeeReducer'
 import { ITransportFeeRepository } from '../../repositories/ITransportFeeRepository'
 import Loading from '../components/Loading'
 import { MultipleSelect, SelectElement } from '../components/MultipleSelect'
@@ -29,38 +29,6 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
     let [originAddress, setOriginAddress] = useState('')
 
     let dispatch = useAppDispatch()
-
-    async function fetchOrigins(fetchNumberOfTransportFees: boolean = false) {
-        if (originStatus.status !== EStatus.IN_PROGRESS) {
-            dispatch(setOriginStatusState({
-                status: EStatus.IN_PROGRESS
-            }))
-            try {
-                if (fetchNumberOfTransportFees) {
-                    let numberOfOrigins = await transportFeeRepository!.fetchNumberOfOrigins()
-                    dispatch(setNumberOfOrigins(numberOfOrigins))
-                }
-                let origins = await transportFeeRepository!.fetchOrigins(Pagination.DEFAULT_PAGE_SIZE, pageNumber * Pagination.DEFAULT_PAGE_SIZE)
-                dispatch(insertOrigins({
-                    offset: pageNumber * Pagination.DEFAULT_PAGE_SIZE,
-                    objects: origins,
-                }))
-                dispatch(setOriginStatusState({
-                    status: EStatus.SUCCESS
-                }))
-            } catch (exception) {
-                let axiosError = exception as AxiosError
-                dispatch(setOriginStatusState({
-                    status: EStatus.ERROR,
-                    message: axiosError.message,
-                }))
-            } finally {
-                dispatch(setOriginStatusState({
-                    status: EStatus.IDLE
-                }))
-            }
-        }
-    }
 
     async function _createOrigin() {
         if (originStatus.status !== EStatus.IN_PROGRESS) {
@@ -88,6 +56,38 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
     }
 
     useEffect(() => {
+        async function fetchOrigins(fetchNumberOfTransportFees: boolean = false) {
+            if (originStatus.status !== EStatus.IN_PROGRESS) {
+                dispatch(setOriginStatusState({
+                    status: EStatus.IN_PROGRESS
+                }))
+                try {
+                    if (fetchNumberOfTransportFees) {
+                        let numberOfOrigins = await transportFeeRepository!.fetchNumberOfOrigins()
+                        dispatch(setNumberOfOrigins(numberOfOrigins))
+                    }
+                    let origins = await transportFeeRepository!.fetchOrigins(Pagination.DEFAULT_PAGE_SIZE, pageNumber * Pagination.DEFAULT_PAGE_SIZE)
+                    dispatch(insertOrigins({
+                        offset: pageNumber * Pagination.DEFAULT_PAGE_SIZE,
+                        objects: origins,
+                    }))
+                    dispatch(setOriginStatusState({
+                        status: EStatus.SUCCESS
+                    }))
+                } catch (exception) {
+                    let axiosError = exception as AxiosError
+                    dispatch(setOriginStatusState({
+                        status: EStatus.ERROR,
+                        message: axiosError.message,
+                    }))
+                } finally {
+                    dispatch(setOriginStatusState({
+                        status: EStatus.IDLE
+                    }))
+                }
+            }
+        }
+
         if (numberOfOrigins === -1) {
             fetchOrigins(true)
         } else {
@@ -103,7 +103,7 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
                 fetchOrigins(false)
             }
         }
-    }, [ numberOfOrigins, pageNumber, origins, originStatus ])
+    }, [ numberOfOrigins, pageNumber, origins, originStatus, dispatch, transportFeeRepository ])
 
     useEffect(() => {
         let newSelecedOriginIds : string[] = []

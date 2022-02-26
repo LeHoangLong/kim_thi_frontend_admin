@@ -36,7 +36,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
             }
         }
         init()
-    }, [ categoriesState.status ])
+    }, [ categoriesState.status, productCategoryRepository, dispatch ])
 
     useEffect(() => {
         if (categoriesState.status.status === EStatus.IN_PROGRESS) {

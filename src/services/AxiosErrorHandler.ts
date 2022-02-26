@@ -1,5 +1,4 @@
 import axios, { AxiosError } from "axios";
-import { NotFound } from "../exceptions/NotFound";
 
 export async function transaction(
     callback: () => Promise<void>,

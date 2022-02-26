@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Symbols } from "../../config/Symbols"
 import myContainer from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
@@ -52,9 +52,9 @@ export const OrderDetailPage = (props: OrderDetailPageProps) => {
         } else {
             props.onBack()
         }
-    }, [props.orderId, ordersDetail])
+    }, [props, ordersDetail, isFetching, dispatch, orderRepository])
 
-    function isAllProductsFetched() {
+    let isAllProductsFetched = useCallback(() => {
         let isAllProductsFetched = true
         if (order) {
             for (let i = 0; i < order.items.length; i++) {
@@ -66,7 +66,7 @@ export const OrderDetailPage = (props: OrderDetailPageProps) => {
             }
         }
         return isAllProductsFetched
-    }
+    }, [order, productDetails])
 
     useEffect(() => {
         if (isFetching || !isAllProductsFetched()) {
@@ -74,7 +74,7 @@ export const OrderDetailPage = (props: OrderDetailPageProps) => {
         } else {
             setIsLoading(false)
         }
-    }, [isFetching, order, productDetails])
+    }, [isFetching, order, productDetails, isFetchingProducts, isAllProductsFetched])
 
     useEffect(() => {
         async function fetchProducts() {
@@ -99,7 +99,7 @@ export const OrderDetailPage = (props: OrderDetailPageProps) => {
         if (!isAllProductsFetched()) {
             fetchProducts()
         }
-    }, [order, productDetails])
+    }, [order, productDetails, dispatch, productRepository, isAllProductsFetched])
 
     function displayOrderItems() {
         let ret: React.ReactNode[] = []

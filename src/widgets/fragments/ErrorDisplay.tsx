@@ -18,13 +18,15 @@ export const ErrorDisplay = (props : ErrorDisplayProps) => {
     let dispatch = useAppDispatch()
 
     useEffect(() => {
-        console.log("activeErrors")
-        console.log(activeErrors)
         if (activeErrors.length > 0) {
             let latestError = activeErrors[activeErrors.length - 1] // currently, error, warning and info are treated the same
-            if (currentError === null || currentError.id !== latestError.id) {
-                setCurrentError(latestError) // latest error
-            }
+            setCurrentError(currentError => {
+                if (currentError === null || currentError.id !== latestError.id) {
+                    return latestError
+                } else {
+                    return currentError
+                }
+            })
         } else {
             setCurrentError(null)
         }

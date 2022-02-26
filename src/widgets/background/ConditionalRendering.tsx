@@ -19,7 +19,7 @@ export const ConditionalRendering = ({
     useEffect(() => {
         let timer = setTimeout(() => setShow(display), display? displayDelayMs : hideDelayMs)
         return () => clearTimeout(timer)
-    }, [display])
+    }, [display, displayDelayMs, hideDelayMs])
 
     if (show) {
         return children

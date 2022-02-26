@@ -16,7 +16,7 @@ import { EErrorLevel } from "../../models/ErrorModel";
 import { IProductRepository } from "../../repositories/IProductRepository";
 import Services from "../../config/Services";
 import { fetchingProductDetail, fetchedProductDetail, errorProductDetail, replaceProductDetailById } from "../../reducers/ProductDetailReducer";
-import { created, fetched as summaryFetched, replace } from "../../reducers/ProductSummaryReducer";
+import { created, replace } from "../../reducers/ProductSummaryReducer";
 import { useEffect } from "react";
 import Loading from "../components/Loading";
 import { error } from "../../reducers/ProductSummaryReducer";
@@ -35,6 +35,7 @@ export interface ProductDetailPageProps {
 }
 
 export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
+    let onBack = props.onBack
     let [productSerialNumber, setProductSerialNumber] = useState("")
     let [productName, setProductName] = useState("")
     let [showModal, setShowModal] = useState(false)
@@ -137,7 +138,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     }))
                 }
 
-                goBack();
+                props.onBack();
             } catch (exception: any) { 
                 dispatch(push({
                     level: EErrorLevel.ERROR,
@@ -153,10 +154,6 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 setIsCreatingNewProduct(false)
             }
         }
-    }
-
-    function goBack() {
-        props.onBack();
     }
 
     useEffect(() => {
@@ -178,7 +175,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                             timeMs: Date.now(),
                             message: exception
                         }))
-                        goBack()
+                        onBack();
                     } finally {
                         setIsFetchingProduct(false)
                     }
@@ -202,7 +199,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
             }
         }
         fetchProductDetail()
-    }, [props.productId])
+    }, [props.productId, dispatch, productDetails, productRepository, onBack])
 
     function clearAll() {
         setProductSerialNumber("")
@@ -221,7 +218,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
         } else {
             setIsLoading(false)
         }
-    }, [isCreatingNewProduct])
+    }, [isCreatingNewProduct, isFetfchingProduct])
 
     function onAddImageClick() {
         setShowModal(true)
@@ -583,7 +580,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
     function onEditingWholesalePriceFinished() {
         setShowNewWholesalePrice(false)
-        if (editingWholesalePriceIndex == -1) {
+        if (editingWholesalePriceIndex === -1) {
             setWholesalePrices([...wholesalePrices, editingWholesalePrice])
         } else {
             wholesalePrices[editingPriceIndex] = editingWholesalePrice
@@ -593,7 +590,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
     return <section>
         <header>
-            <FormNavigationBar onBackButtonPressed={ goBack } onOkButtonPressed={ onOkButtonPressed }></FormNavigationBar>
+            <FormNavigationBar onBackButtonPressed={ props.onBack } onOkButtonPressed={ onOkButtonPressed }></FormNavigationBar>
         </header>
         <aside>
             <ConditionalRendering display={ showModal }>

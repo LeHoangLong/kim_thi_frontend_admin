@@ -1,5 +1,5 @@
 import { AxiosError } from "axios"
-import React from "react"
+import React, { useCallback } from "react"
 import { useEffect } from "react"
 import { useState } from "react"
 import { Pagination } from "../../config/Pagination"
@@ -29,7 +29,7 @@ export const TransportFeeSummariesPage = (props: TransportFeeSummariesPageProps)
     let transportFeeRepository = myContainer.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
     let dispatch = useAppDispatch()
 
-    async function fetchSummaries(offset: number, fetchNumberOfFees: boolean) {
+    let fetchSummaries = useCallback(async (offset: number, fetchNumberOfFees: boolean) => {
         dispatch(setTransportFeeSummaryStatus({
             status: EStatus.IN_PROGRESS,
         }))
@@ -60,7 +60,7 @@ export const TransportFeeSummariesPage = (props: TransportFeeSummariesPageProps)
                 status: EStatus.IDLE,
             }))
         }
-    }
+    }, [dispatch, transportFeeRepository])
 
     useEffect(() => {
         if (numberOfFees !== -1) {
@@ -111,7 +111,7 @@ export const TransportFeeSummariesPage = (props: TransportFeeSummariesPageProps)
                 fetchSummaries(pageNumber * Pagination.DEFAULT_PAGE_SIZE, false)
             }
         }
-    }, [numberOfFees, feeSummaries, pageNumber, feeSummariesOperationStatus, transportFeeRepository])
+    }, [numberOfFees, feeSummaries, pageNumber, feeSummariesOperationStatus, transportFeeRepository, fetchSummaries])
 
     function displaySummaryCards() {
         let summariesElement : React.ReactNode[] = []

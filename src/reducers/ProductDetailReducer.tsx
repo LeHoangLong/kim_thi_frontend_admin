@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ErrorModel } from "../models/ErrorModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
 import { EStatus } from "../models/StatusModel";
 import { ProductDetailState } from "../states/ProductDetailState";

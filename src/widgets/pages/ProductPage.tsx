@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react"
+import React, { useCallback, useEffect, useState } from "react"
 import { Pagination } from "../../config/Pagination";
 import Services from "../../config/Services";
 import myContainer from "../../container";
@@ -31,7 +31,7 @@ export const ProductPage = () => {
 
     let dispatch = useAppDispatch()
 
-    async function fetchProducts(pageNumber: number) {
+    let fetchProducts = useCallback(async (pageNumber: number) => {
         try {
             let summaries = await productRepository!.fetchProductSummaries(pageNumber * Pagination.DEFAULT_PAGE_SIZE, Pagination.DEFAULT_PAGE_SIZE)
             dispatch(fetched({
@@ -45,7 +45,7 @@ export const ProductPage = () => {
                 throw exception
             }
         }
-    }
+    }, [dispatch, productRepository])
 
     useEffect(() => {
         async function init() {
@@ -68,7 +68,7 @@ export const ProductPage = () => {
             }
         }
         init()
-    }, [dispatch])
+    }, [dispatch, productRepository])
 
     useEffect(() => {
         if (productSummaryStatus.status === EStatus.IN_PROGRESS) {
@@ -96,7 +96,7 @@ export const ProductPage = () => {
                 fetchProducts(selectedPageNumber)
             }
         }
-    }, [selectedPageNumber])
+    }, [selectedPageNumber, fetchProducts, numberOfProducts, productSummaries])
 
     function displayPageNumbers() {
         let ret : React.ReactNode[] = []
@@ -134,7 +134,7 @@ export const ProductPage = () => {
             if (summary !== undefined) {
                 ret.push(
                     <li key={ summary.id } className="product-summary" onClick={ () => onProductClicked(summary!) }>
-                        <img src={ summary.avatar.path }></img>
+                        <img src={ summary.avatar.path } alt="Ảnh đại diện"></img>
                         <div className="summary">
                             <div className="summary-field">
                                 <strong>
@@ -172,6 +172,8 @@ export const ProductPage = () => {
         }
     }, [showProductDetailPage])
 
+    let onProductDetailPageBack = useCallback(() => setShowProductDetailPage(false), [])
+
     return <div className="product-page">
         <section style={{ display: showMainPage? 'none' : 'block' }}>
             {(() => {
@@ -195,7 +197,7 @@ export const ProductPage = () => {
             </FloatingActionButton>
         </section>
         <PageTransition show={ showProductDetailPage } zIndex={ 101 }>
-            <ProductDetailPage productId={ selectedProductId } onBack={ () => setShowProductDetailPage(false) }></ProductDetailPage>
+            <ProductDetailPage productId={ selectedProductId } onBack={ onProductDetailPageBack }></ProductDetailPage>
         </PageTransition>
     </div>
 } 
