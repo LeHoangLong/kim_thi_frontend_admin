@@ -1,4 +1,8 @@
-docker build\
- --build-arg ECOMMERCE_ADMIN_BACKEND_URL=${ECOMMERCE_ADMIN_BACKEND_URL}\
- --build-arg ECOMMERCE_ADMIN_FILESERVER_URL=${ECOMMERCE_ADMIN_FILESERVER_URL}\
- . -t ecommerce_frontend_admin
+
+export PUBLIC_URL=/admin
+export REACT_APP_BACKEND_URL=${ECOMMERCE_ADMIN_BACKEND_URL}
+export REACT_APP_FILESERVER_URL=${ECOMMERCE_ADMIN_FILESERVER_URL}
+
+npm install
+npm run build
+docker build . -t $1
