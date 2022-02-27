@@ -7,6 +7,8 @@ import { IImageRepository } from "./IImageRepository";
 
 export class RemoteImageRepository implements IImageRepository {
     private normalizeImagePath(path: string) : string {
+        console.log('FILESERVER_URL')
+        console.log(FILESERVER_URL)
         if (!path.includes('http')) {
             path = FILESERVER_URL + '/' + path
         }

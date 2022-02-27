@@ -10,6 +10,7 @@ axios.defaults.headers.common['withCredentials'] = true;
 
 console.log('process.env.REACT_APP_BACKEND_URL')
 console.log(process.env.REACT_APP_BACKEND_URL)
+console.log(process.env.REACT_APP_FILESERVER_URL)
 
 ReactDOM.render(
   <React.StrictMode>
