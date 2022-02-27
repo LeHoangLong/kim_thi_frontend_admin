@@ -7,7 +7,7 @@ import { TransportFeePage } from "./TransportFeePage"
 
 export const Dashboard = () => {
     let [renderedMenus, setRenderedMenus] = useState<string[]>(["Sản phẩm"])
-    let [selectedMenu, setSelectedMenu] = useState(1)
+    let [selectedMenu, setSelectedMenu] = useState(0)
 
     const sidebarMenus : string[] = [ "Sản phẩm" ]
 
@@ -21,13 +21,13 @@ export const Dashboard = () => {
 
     return <Scaffold selectedMenu={selectedMenu} title="" sidebarMenus={ sidebarMenus } onMenuSelected={ onMenuSelected }>
         <div key={1} style={{ display: selectedMenu === 0? 'block' : 'none' }} className="h-100pc">
-            <ConditionalRendering display={ renderedMenus.indexOf("Đơn hàng") !== -1 }>
-                <OrderPage></OrderPage>
+            <ConditionalRendering display={ renderedMenus.indexOf("Sản phẩm") !== -1 }>
+                <ProductPage></ProductPage>
             </ConditionalRendering>
         </div>
         <div key={2} style={{ display: selectedMenu === 1? 'block' : 'none' }} className="h-100pc">
-            <ConditionalRendering display={ renderedMenus.indexOf("Sản phẩm") !== -1 }>
-                <ProductPage></ProductPage>
+            <ConditionalRendering display={ renderedMenus.indexOf("Đơn hàng") !== -1 }>
+                <OrderPage></OrderPage>
             </ConditionalRendering>
         </div>
         <div key={3} style={{ display: selectedMenu === 2? 'block' : 'none' }} className="h-100pc">
