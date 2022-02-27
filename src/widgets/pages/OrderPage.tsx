@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from "react"
-import { Symbols } from "../../config/Symbols"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 import { useAppDispatch } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { setNumberOfOrders, setNumberOfOrdersStatus, setOrderSummaries   } from "../../reducers/OrderReducer"
-import { FilterOrderArg, IOrderRepository } from "../../repositories/IOrderRepository"
+import { FilterOrderArg } from "../../repositories/IOrderRepository"
 import { ConditionalRendering } from "../background/ConditionalRendering"
 import { DateSelectionInput } from "../components/DateSelectionInput"
 import { PageTransition } from "../components/PageTransition"
@@ -12,7 +11,7 @@ import styles from './OrderPage.module.scss'
 import { OrdersListPage } from "./OrdersListPage"
 
 export const OrderPage = () => {
-    let orderRepository = myContainer.get<IOrderRepository>(Symbols.ORDER_REPOSITORY)
+    let { orderRepository } = useContainer()[0]
     let [fromDate, setFromDate] = useState<Date>(new Date())
     let [toDate, setToDate] = useState<Date>(new Date())
     let [orderId, setOrderId] = useState("")

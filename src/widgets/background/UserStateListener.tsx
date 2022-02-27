@@ -1,10 +1,8 @@
 import { useEffect, useState } from "react";
-import Services from "../../config/Services";
-import myContainer from "../../container";
+import { useContainer } from "../../container";
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel";
 import { loggedIn, loggedOut, fetchingUser } from "../../reducers/UserReducer";
-import { IUserRepository } from "../../repositories/IUserRepository";
 import Loading from "../components/Loading";
 import { LoginPage } from "../pages/LoginPage"
 import { Router } from "./Router";
@@ -16,10 +14,11 @@ export const UserStateListener = () => {
 
     let userOperationState = useAppSelector(state => state.users.status);
     let [isLoading, setIsLoading] = useState(true);
+    let userRepository = useContainer()[0].userRepository;
+
     useEffect(() => {
         async function init() {
             dispatch(fetchingUser());
-            let userRepository = myContainer.get<IUserRepository>(Services.USER_REPOSITORY);
             let user = await userRepository!.getUser();
             if (user !== null) {
                 dispatch(loggedIn(user));
@@ -37,7 +36,7 @@ export const UserStateListener = () => {
         } else {
             setIsLoading(false);
         }
-    }, [userOperationState, dispatch]);
+    }, [userOperationState, dispatch, userRepository]);
 
     if (isLoading) {
         return <Loading></Loading>

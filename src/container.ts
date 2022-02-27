@@ -1,5 +1,4 @@
-import { Container } from 'inversify'
-import { Symbols } from './config/Symbols'
+import React, { useEffect, useState } from 'react'
 import { IImageRepository } from './repositories/IImageRepository'
 import { IOrderRepository } from './repositories/IOrderRepository'
 import { IProductCategoryRepository } from './repositories/IProductCategoryRepository'
@@ -13,21 +12,41 @@ import { RemoteProductRepository } from './repositories/RemoteProductRepository'
 import { RemoteTransportFeeRepository } from './repositories/RemoteTransportFeeRepository'
 import { RemoteUserRepository } from './repositories/RemoteUserRepository'
 
-let myContainer = new Container()
+export interface Container {
+    transportFeeRepository: ITransportFeeRepository
+    userRepository: IUserRepository
+    productRepository: IProductRepository
+    imageRepository: IImageRepository
+    productCategoryRepository: IProductCategoryRepository
+    orderRepository: IOrderRepository
+}
 
-myContainer.bind<ITransportFeeRepository>(Symbols.TRANSPORT_FEE_REPOSITORY).to(RemoteTransportFeeRepository).inSingletonScope()
-myContainer.bind<IUserRepository>(Symbols.USER_REPOSITORY).to(RemoteUserRepository).inSingletonScope()
-myContainer.bind<IProductRepository>(Symbols.PRODUCT_REPOSITORY).to(RemoteProductRepository).inSingletonScope()
-myContainer.bind<IImageRepository>(Symbols.IMAGE_REPOSITORY).to(RemoteImageRepository).inSingletonScope()
-myContainer.bind<IProductCategoryRepository>(Symbols.PRODUCT_CATEGORY_REPOSITORY).to(RemoteProductCategoryRepository).inSingletonScope()
-myContainer.bind<IOrderRepository>(Symbols.ORDER_REPOSITORY).to(RemoteOrderRepository).inSingletonScope()
+let container: Container = {
+    transportFeeRepository: new RemoteTransportFeeRepository(),
+    userRepository: new RemoteUserRepository(),
+    productRepository: new RemoteProductRepository(),
+    imageRepository: new RemoteImageRepository(),
+    productCategoryRepository: new RemoteProductCategoryRepository(),
+    orderRepository: new RemoteOrderRepository(),
+}
 
-// let mockProductCategoryRepository = new MockProductCategoryRepository(5)
-// myContainer.rebind<IProductCategoryRepository>(Symbols.PRODUCT_CATEGORY_REPOSITORY).toConstantValue(mockProductCategoryRepository)
-// let mockProductRepository = new MockProductRepository(mockProductCategoryRepository, 100)
-// myContainer.rebind<IProductRepository>(Symbols.PRODUCT_REPOSITORY).toConstantValue(mockProductRepository)
-// let mockOrderRepository = new MockOrderRepository(myContainer.get<ITransportFeeRepository>(Symbols.TRANSPORT_FEE_REPOSITORY), 100)
-// myContainer.rebind<IOrderRepository>(Symbols.ORDER_REPOSITORY).toConstantValue(mockOrderRepository)
+let observers: React.Dispatch<React.SetStateAction<Container>>[] = [];
 
-export { myContainer }
-export default myContainer
+export const setContainer = (iContainer: Container) => {
+    container = iContainer
+    observers.forEach(dispatch => dispatch(container))
+}
+
+export function useContainer() : [Container, (container: Container) => void] {
+    let [containerState, setContainerState] = useState<Container>(container)
+    useEffect(() => {
+        observers.push(setContainerState)
+        setContainerState(container)
+        return () => {
+            observers.filter(dispatch => dispatch !== setContainerState)
+        }
+    }, [])
+
+    return [containerState, setContainer]
+}
+

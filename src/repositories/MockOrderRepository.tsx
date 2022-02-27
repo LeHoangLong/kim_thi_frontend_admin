@@ -1,12 +1,10 @@
 import 'reflect-metadata'
-import { injectable } from "inversify";
 import { OrderModel, OrderSummary } from "../models/OrderModel";
 import { FetchOrderSummaryArg, FilterOrderArg, IOrderRepository } from "./IOrderRepository";
 import { ITransportFeeRepository } from './ITransportFeeRepository';
 import { NotFound } from '../exceptions/NotFound';
 import { EProductUnit } from '../models/EProductUnit';
 
-@injectable()
 export class MockOrderRepository implements IOrderRepository {
     public orders: OrderModel[] = []
     

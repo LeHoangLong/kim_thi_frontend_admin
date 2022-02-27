@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import Services from '../../config/Services';
-import myContainer from '../../container';
+import { useContainer } from '../../container';
 import { useAppDispatch } from '../../hooks/Hooks';
 import { error, loggedIn, loggingIn } from '../../reducers/UserReducer';
-import { IUserRepository, IUserRepositoryErrorAuthenticationFailed } from '../../repositories/IUserRepository';
+import { IUserRepositoryErrorAuthenticationFailed } from '../../repositories/IUserRepository';
 import styles from './LoginPage.module.scss';
 
 export const LoginPage = () => {
@@ -11,7 +10,7 @@ export const LoginPage = () => {
     let [password, setPassword] = useState('');
 
     let dispatch = useAppDispatch();
-    let userRepository = myContainer.get<IUserRepository>(Services.USER_REPOSITORY);
+    let userRepository = useContainer()[0].userRepository
     async function onLoginHandler() {
         dispatch(loggingIn());
         try {

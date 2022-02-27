@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { Pagination } from "../../config/Pagination";
-import Services from "../../config/Services";
-import myContainer from "../../container";
+import { useContainer } from "../../container";
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks";
 import { ProductSummaryModel } from "../../models/ProductSummaryModel";
 import { EStatus } from "../../models/StatusModel";
 import { clear, error, fetched, fetching, setNumberOfProducts } from "../../reducers/ProductSummaryReducer";
-import { IProductRepository } from "../../repositories/IProductRepository";
 import { FloatingActionButton } from "../components/FloatingActionButton"
 import Loading from "../components/Loading";
 import { PageTransition } from "../components/PageTransition";
@@ -26,7 +24,7 @@ export const ProductPage = () => {
 
     let productSummaryStatus = useAppSelector((state) => state.productSummaries.status)
     let productSummaries = useAppSelector((state) => state.productSummaries.summaries)
-    let productRepository = myContainer.get<IProductRepository>(Services.PRODUCT_REPOSITORY)
+    let { productRepository } = useContainer()[0]
     let numberOfProducts = useAppSelector((state) => state.productSummaries.numberOfProducts)
 
     let dispatch = useAppDispatch()

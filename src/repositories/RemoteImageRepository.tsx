@@ -1,12 +1,10 @@
 import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
-import { injectable } from "inversify";
 import { FILESERVER_URL, HOST_URL } from "../config/Url";
 import { NotFound } from "../exceptions/NotFound";
 import { ImageModel } from "../models/ImageModel";
 import { IImageRepository } from "./IImageRepository";
 
-@injectable()
 export class RemoteImageRepository implements IImageRepository {
     private normalizeImagePath(path: string) : string {
         if (!path.includes('http')) {

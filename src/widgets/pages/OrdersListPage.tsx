@@ -1,11 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react"
 import { Pagination } from "../../config/Pagination"
-import { Symbols } from "../../config/Symbols"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { setOrderSummaries } from "../../reducers/OrderReducer"
-import { FilterOrderArg, IOrderRepository } from "../../repositories/IOrderRepository"
+import { FilterOrderArg } from "../../repositories/IOrderRepository"
 import { HeaderBar } from "../components/HeaderBar"
 import Loading from "../components/Loading"
 import styles from './OrdersListPage.module.scss'
@@ -26,7 +25,7 @@ export const OrdersListPage = (props: OrdersListPageProps) => {
     let numberOfOrdersStatus = useAppSelector(state => state.orders.numberOfOrdersStatus)
     let orderSummaries = useAppSelector(state => state.orders.orderSummaries)
     let [isLoading, setIsLoading] = useState(false)
-    let orderRepository = myContainer.get<IOrderRepository>(Symbols.ORDER_REPOSITORY)
+    let { orderRepository } = useContainer()[0]
     let dispatch = useAppDispatch()
     let [fetchingPageSet, setFetchingPageSet] = useState<Set<number>>(new Set<number>())
 

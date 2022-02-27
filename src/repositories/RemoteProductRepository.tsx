@@ -1,6 +1,5 @@
 import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
-import { injectable } from "inversify";
 import { FILESERVER_URL, HOST_URL } from "../config/Url";
 import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { ProductDetailModel } from "../models/ProductDetailModel";
@@ -43,7 +42,6 @@ export function jsonToProductPrice(json: any) : ProductPrice {
     return ret
 }
 
-@injectable()
 export class RemoteProductRepository implements IProductRepository {
     async fetchProductSummaries(offset: number, limit: number) : Promise<ProductSummaryModel[]> {
         try {

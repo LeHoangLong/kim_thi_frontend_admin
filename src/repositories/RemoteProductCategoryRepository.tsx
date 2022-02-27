@@ -1,11 +1,9 @@
 import 'reflect-metadata';
 import axios, { AxiosError } from "axios";
-import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
 import { ProductCategoryModel } from "../models/ProductCategoryModel";
 import { IProductCategoryRepository } from "./IProductCategoryRepository";
 
-@injectable()
 export class RemoteProductCategoryRepository implements IProductCategoryRepository {
     async getNumberOfCategories() : Promise<number> {
         try {

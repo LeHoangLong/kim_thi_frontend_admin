@@ -1,16 +1,14 @@
 import React, { useEffect, useRef, useState } from "react"
 import { Pagination } from "../../config/Pagination"
-import Services from "../../config/Services"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { clear, created, creating, fetched, setNumberOfImages, error } from "../../reducers/ImageReducer"
 import { push } from "../../reducers/ErrorReducer"
-import { IImageRepository } from "../../repositories/IImageRepository"
 import { IconButton } from "../components/IconButton"
 import './ImageGallery.scss'
 import Loading from "../components/Loading"
 import { ImageModel } from "../../models/ImageModel"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 
 export interface ImageGalleryProps {
     onImageClicked(image: ImageModel) : void;
@@ -20,7 +18,7 @@ export interface ImageGalleryProps {
 export const ImageGallery = (props : ImageGalleryProps) => {
     let images = useAppSelector(state => state.images.images)
     let imageState = useAppSelector(state => state.images.status)
-    let imageRepository = myContainer.get<IImageRepository>(Services.IMAGE_REPOSITORY)
+    let imageRepository = useContainer()[0].imageRepository
     let fileInput = useRef<HTMLInputElement>(null)
     let formData = new FormData()
     let [isLoading, setIsLoading] = useState(false)

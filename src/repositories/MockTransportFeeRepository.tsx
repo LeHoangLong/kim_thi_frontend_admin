@@ -1,10 +1,8 @@
-import { injectable } from "inversify";
 import { NotFound } from "../exceptions/NotFound";
 import { delay } from "../helpers/delay";
 import { DistanceBasedTransportFeeOrigin, AreaTransportSummary, AreaTransportFee } from "../models/TransportFee";
 import { CreateAreaTransportFeeArgs, ITransportFeeRepository } from "./ITransportFeeRepository";
 
-@injectable()
 export class MockTransportFeeRepository implements ITransportFeeRepository {
     public origins: DistanceBasedTransportFeeOrigin[] = []
     public fees: AreaTransportFee[] = []

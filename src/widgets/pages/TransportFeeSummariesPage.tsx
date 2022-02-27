@@ -3,12 +3,10 @@ import React, { useCallback } from "react"
 import { useEffect } from "react"
 import { useState } from "react"
 import { Pagination } from "../../config/Pagination"
-import Services from "../../config/Services"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { insertTransportFeeSummaries, setNumberOfTransportFee, setTransportFeeSummaryStatus } from "../../reducers/TransportFeeReducer"
-import { ITransportFeeRepository } from "../../repositories/ITransportFeeRepository"
 import { ConditionalRendering } from "../background/ConditionalRendering"
 import Loading from "../components/Loading"
 import { ScrollingPageIndex } from "../components/ScrollingPageIndex"
@@ -26,7 +24,7 @@ export const TransportFeeSummariesPage = (props: TransportFeeSummariesPageProps)
     let [pageNumber, setPageNumber] = useState(0)
     let [isLoading, setIsLoading] = useState(true)
     let [showPageNumber, setShowPageNumber] = useState(true)
-    let transportFeeRepository = myContainer.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
+    let { transportFeeRepository } = useContainer()[0]
     let dispatch = useAppDispatch()
 
     let fetchSummaries = useCallback(async (offset: number, fetchNumberOfFees: boolean) => {

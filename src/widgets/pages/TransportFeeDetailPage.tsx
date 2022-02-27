@@ -1,13 +1,11 @@
 import { AxiosError } from "axios"
 import React, { useCallback, useState } from "react"
 import { useEffect } from "react"
-import Services from "../../config/Services"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EStatus } from "../../models/StatusModel"
 import { AreaTransportFee, BillBasedTransportFee } from "../../models/TransportFee"
 import { createTransportFee, insertOriginToMap, insertTransportFeeDetail, setNumberOfTransportFee, setOriginMapStatus, setTransportFeeDetailStatus, updateTransportFee } from "../../reducers/TransportFeeReducer"
-import { ITransportFeeRepository } from "../../repositories/ITransportFeeRepository"
 import { ConditionalRendering } from "../background/ConditionalRendering"
 import { DecimalInput } from "../components/DecimalInput"
 import { FormNavigationBar } from "../components/FormNavigationbar"
@@ -27,7 +25,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
     let onBack = props.onBack
 
     let feeDetails = useAppSelector(state => state.transportFees.feeDetails)
-    let feeRepository = myContainer.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
+    let { transportFeeRepository } = useContainer()[0]
     let feeDetailStatus = useAppSelector(state => state.transportFees.feeDetailOperationStatus)
     let originsMapStatus = useAppSelector(state => state.transportFees.originsMapOperationStatus)
     let originsMap = useAppSelector(state => state.transportFees.originsMap)
@@ -58,7 +56,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
             status: EStatus.IN_PROGRESS
         }))
         try {
-            let ret = await feeRepository!.fetchTransportFee(feeId)
+            let ret = await transportFeeRepository!.fetchTransportFee(feeId)
             dispatch(insertTransportFeeDetail(ret))
             dispatch(setTransportFeeDetailStatus({
                 status: EStatus.SUCCESS
@@ -76,7 +74,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
                 status: EStatus.IDLE
             }))
         }
-    }, [dispatch, feeRepository])
+    }, [dispatch, transportFeeRepository])
 
     function setFeeForm(feeDetail: AreaTransportFee | null) {
         if (feeDetail) {
@@ -124,14 +122,14 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         } else {
             setFeeForm(null)
         }
-    }, [props.feeId, onBack, feeDetails, feeDetailStatus, feeRepository, fetchFeeDetail])
+    }, [props.feeId, onBack, feeDetails, feeDetailStatus, transportFeeRepository, fetchFeeDetail])
     
     let fetchOrigins = useCallback(async (missingOriginIds: number[]) => {
         dispatch(setOriginMapStatus({
             status: EStatus.IN_PROGRESS
         }))
         try {
-            let origins = await feeRepository!.fetchOriginsById(missingOriginIds);
+            let origins = await transportFeeRepository!.fetchOriginsById(missingOriginIds);
             for (let i = 0; i < origins.length; i++) {
                 dispatch(insertOriginToMap(origins[i]))
             }
@@ -149,7 +147,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
                 status: EStatus.IDLE
             }))
         }
-    }, [dispatch, feeRepository])
+    }, [dispatch, transportFeeRepository])
 
     useEffect(() => {
         let missingOriginIds = []
@@ -162,7 +160,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         if (missingOriginIds.length > 0 && originsMapStatus.status !== EStatus.IN_PROGRESS) {
             fetchOrigins(missingOriginIds)
         }
-    }, [originIds, originsMapStatus, feeRepository, fetchOrigins, originsMap])
+    }, [originIds, originsMapStatus, transportFeeRepository, fetchOrigins, originsMap])
 
 
     function goBack() {
@@ -258,7 +256,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
         }))
         try {
             if (feeId === null) {
-                let createdFee = await feeRepository!.createTransportFee({
+                let createdFee = await transportFeeRepository!.createTransportFee({
                     name: name,
                     city: city,
                     basicFee: basicFee,
@@ -269,7 +267,7 @@ export const TransportFeeDetailPage = (props: TransportFeeDetailPageProps) => {
                 dispatch(createTransportFee(createdFee))
                 dispatch(setNumberOfTransportFee(numberOfTransportFees + 1))
             } else {
-                let updatedFee = await feeRepository!.updateTransportFee(feeId, {
+                let updatedFee = await transportFeeRepository!.updateTransportFee(feeId, {
                     name: name,
                     city: city,
                     basicFee: basicFee,

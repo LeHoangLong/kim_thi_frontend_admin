@@ -1,13 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react"
-import { Symbols } from "../../config/Symbols"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { EProductUnitToString } from "../../models/EProductUnit"
 import { OrderModel } from "../../models/OrderModel"
 import { setOrderDetail } from "../../reducers/OrderReducer"
 import { fetchedProductDetail, fetchingProductDetail } from "../../reducers/ProductDetailReducer"
-import { IOrderRepository } from "../../repositories/IOrderRepository"
-import { IProductRepository } from "../../repositories/IProductRepository"
 import { HeaderBar } from "../components/HeaderBar"
 import Loading from "../components/Loading"
 import styles from './OrderDetailPage.module.scss'
@@ -23,10 +20,9 @@ export const OrderDetailPage = (props: OrderDetailPageProps) => {
     let [isFetching, setIsFetching] = useState(false)
     let [isFetchingProducts, setIsFetchingProducts] = useState(false)
     let [isLoading, setIsLoading] = useState(false)
-    let orderRepository = myContainer.get<IOrderRepository>(Symbols.ORDER_REPOSITORY)
+    let {orderRepository, productRepository} = useContainer()[0]
     let productDetails = useAppSelector(state => state.productDetails.products)
     let dispatch = useAppDispatch()
-    let productRepository = myContainer.get<IProductRepository>(Symbols.PRODUCT_REPOSITORY)
 
     useEffect(() => {
         async function fetchOrderDetail(orderId: number) {

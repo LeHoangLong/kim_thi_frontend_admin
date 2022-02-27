@@ -13,19 +13,16 @@ import { ProductDetailModel } from "../../models/ProductDetailModel";
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks";
 import { push } from "../../reducers/ErrorReducer";
 import { EErrorLevel } from "../../models/ErrorModel";
-import { IProductRepository } from "../../repositories/IProductRepository";
-import Services from "../../config/Services";
 import { fetchingProductDetail, fetchedProductDetail, errorProductDetail, replaceProductDetailById } from "../../reducers/ProductDetailReducer";
 import { created, replace } from "../../reducers/ProductSummaryReducer";
 import { useEffect } from "react";
 import Loading from "../components/Loading";
 import { error } from "../../reducers/ProductSummaryReducer";
 import { ProductSummaryModel } from "../../models/ProductSummaryModel";
-import { IImageRepository } from "../../repositories/IImageRepository";
 import { CategoryGallery } from "../fragments/CategoryGallery";
 import { ProductCategoryModel } from "../../models/ProductCategoryModel";
 import styles from './ProductDetailPage.module.scss'
-import myContainer from "../../container";
+import { useContainer } from "../../container";
 
 const update = require('update-immutable').default
 
@@ -69,8 +66,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
 
     let dispatch = useAppDispatch()
 
-    let productRepository = myContainer.get<IProductRepository>(Services.PRODUCT_REPOSITORY)
-    let imageRepository = myContainer.get<IImageRepository>(Services.IMAGE_REPOSITORY)
+    let { productRepository, imageRepository } = useContainer()[0]
     let images = useAppSelector(state => state.images.images)
     let productDetails = useAppSelector(state => state.productDetails.products)
 

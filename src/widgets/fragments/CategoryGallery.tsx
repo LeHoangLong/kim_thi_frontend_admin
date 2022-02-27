@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react"
 import { Pagination } from "../../config/Pagination"
-import Services from "../../config/Services"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { ProductCategoryModel } from "../../models/ProductCategoryModel"
 import { EStatus } from "../../models/StatusModel"
 import { addCategories, clearCategories, setNumberOfCategories, updateCategoryStateStatus } from "../../reducers/ProductCategoryReducer"
-import { IProductCategoryRepository } from "../../repositories/IProductCategoryRepository"
 import './CategoryGallery.scss'
 import Loading from "../components/Loading"
-import myContainer from "../../container"
+import { useContainer } from "../../container"
 
 export interface CategoryGalleryProps {
     onProductCategoryClicked(category: ProductCategoryModel) : void;
@@ -22,7 +20,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
     let [newCategory, setNewCategory] = useState<string>("")
 
     let categoriesState = useAppSelector(state => state.productCategories)
-    let productCategoryRepository = myContainer.get<IProductCategoryRepository>(Services.PRODUCT_CATEGORY_REPOSITORY)
+    let productCategoryRepository = useContainer()[0].productCategoryRepository
     let dispatch = useAppDispatch()
 
     useEffect(() => {

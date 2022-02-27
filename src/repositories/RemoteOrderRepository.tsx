@@ -7,7 +7,6 @@ import { OrderItem, OrderModel, OrderSummary } from "../models/OrderModel";
 import { transaction } from "../services/AxiosErrorHandler";
 import { FetchOrderSummaryArg, FilterOrderArg, IOrderRepository } from "./IOrderRepository";
 import { jsonToTransportFeeDetail } from "./RemoteTransportFeeRepository";
-import { injectable } from 'inversify';
 import { stringToEProductUnit } from '../models/EProductUnit';
 
 export function parseCustomerContact(json: any) : CustomerContact {
@@ -68,7 +67,6 @@ export function parseOrder(json: any): OrderModel {
     return model
 }
 
-@injectable()
 export class RemoteOrderRepository implements IOrderRepository {
     async fetchOrderSummaries(arg: FetchOrderSummaryArg) : Promise<OrderSummary[]> {
         let ret: OrderSummary[] = []

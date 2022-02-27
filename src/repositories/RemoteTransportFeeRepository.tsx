@@ -1,5 +1,4 @@
 import 'reflect-metadata';
-import { injectable } from "inversify";
 import { HOST_URL } from "../config/Url";
 import { axiosDelete, axiosGet, axiosPost, axiosPut } from "../helpers/axios";
 import { DistanceBasedTransportFeeOrigin, AreaTransportSummary, AreaTransportFee } from "../models/TransportFee";
@@ -26,7 +25,6 @@ export function jsonToTransportFeeDetail(json: any): AreaTransportFee {
     }
 }
 
-@injectable()
 export class RemoteTransportFeeRepository implements ITransportFeeRepository {
     async fetchOriginsById(ids: number[]) : Promise<DistanceBasedTransportFeeOrigin[]> {
         let response = await axiosGet(`${HOST_URL}/transport_fees/origins`, {

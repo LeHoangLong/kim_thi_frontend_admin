@@ -2,12 +2,10 @@ import { AxiosError } from 'axios'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { Pagination } from '../../config/Pagination'
-import Services from '../../config/Services'
-import myContainer from '../../container'
+import { useContainer } from '../../container'
 import { useAppDispatch, useAppSelector } from '../../hooks/Hooks'
 import { EStatus } from '../../models/StatusModel'
 import { createOrigin, insertOrigins, setNumberOfOrigins, setOriginStatusState } from '../../reducers/TransportFeeReducer'
-import { ITransportFeeRepository } from '../../repositories/ITransportFeeRepository'
 import Loading from '../components/Loading'
 import { MultipleSelect, SelectElement } from '../components/MultipleSelect'
 import { ScrollingPageIndex } from '../components/ScrollingPageIndex'
@@ -22,7 +20,7 @@ export const AddOriginToTransportFee = (props: AddOriginToTransportFeeProps) => 
     let origins = useAppSelector(state => state.transportFees.origins)
     let numberOfOrigins = useAppSelector(state => state.transportFees.numberOfOrigins)
     let originStatus = useAppSelector(state => state.transportFees.originsOperationStatus)
-    let transportFeeRepository = myContainer.get<ITransportFeeRepository>(Services.TRANSPORT_FEE_REPOSITORY)
+    let transportFeeRepository = useContainer()[0].transportFeeRepository
     
     let [pageNumber, setPageNumber] = useState(0)
     let [selectedOriginIds, setSelectedOriginIds] = useState<string[]>([])
