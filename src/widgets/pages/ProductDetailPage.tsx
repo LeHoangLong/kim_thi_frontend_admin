@@ -98,7 +98,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                 if (props.productId === undefined) {
                     setIsCreatingNewProduct(true)
                     let createdProduct = await productRepository!.createProduct(product)
-                    let avatar = images.find(e => e.id === createdProduct.avatar.id)
+                    let avatar = images.find(e => e?.id === createdProduct.avatar.id)
                     if (avatar === undefined) {
                         avatar = await imageRepository!.fetchImageById(createdProduct.avatar.id)
                     }
@@ -114,7 +114,7 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
                     product.id = props.productId
                     setIsCreatingNewProduct(true)
                     let createdProduct = await productRepository!.updateProduct(props.productId, product)
-                    let avatar = images.find(e => e.id === createdProduct.avatar.id)
+                    let avatar = images.find(e => e?.id === createdProduct.avatar.id)
                     if (avatar === undefined) {
                         avatar = await imageRepository!.fetchImageById(createdProduct.avatar.id)
                     }

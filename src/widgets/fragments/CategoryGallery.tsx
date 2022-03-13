@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react"
-import { Pagination } from "../../config/Pagination"
 import { useAppDispatch, useAppSelector } from "../../hooks/Hooks"
 import { ProductCategoryModel } from "../../models/ProductCategoryModel"
 import { EStatus } from "../../models/StatusModel"
@@ -29,7 +28,7 @@ export const CategoryGallery = (props: CategoryGalleryProps) => {
                 dispatch(clearCategories())
                 let count = await productCategoryRepository!.getNumberOfCategories()
                 dispatch(setNumberOfCategories(count))
-                let categories = await productCategoryRepository!.getCategories(Pagination.DEFAULT_PAGE_SIZE, 0)
+                let categories = await productCategoryRepository!.getCategories(count, 0)
                 dispatch(addCategories(categories))
             }
         }

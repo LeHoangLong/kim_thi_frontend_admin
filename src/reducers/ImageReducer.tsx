@@ -30,14 +30,11 @@ const slice = createSlice({
                 status: EStatus.IN_PROGRESS
             }
         },
-        fetched(state, action: PayloadAction<ImageModel[]>) {
+        fetched(state, action: PayloadAction<(ImageModel | undefined)[]>) {
             state.status = {
                 status: EStatus.IDLE
             }
-            state.images = [
-                ...state.images,
-                ...action.payload,
-            ]
+            state.images = [...action.payload]
         },
         creating(state) {
             state.status = {

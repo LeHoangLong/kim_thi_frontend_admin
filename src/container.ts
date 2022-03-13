@@ -5,6 +5,7 @@ import { IProductCategoryRepository } from './repositories/IProductCategoryRepos
 import { IProductRepository } from './repositories/IProductRepository'
 import { ITransportFeeRepository } from './repositories/ITransportFeeRepository'
 import { IUserRepository } from './repositories/IUserRepository'
+// import { MockImageRepository } from './repositories/MockImageRepository'
 import { RemoteImageRepository } from './repositories/RemoteImageRepository'
 import { RemoteOrderRepository } from './repositories/RemoteOrderRepository'
 import { RemoteProductCategoryRepository } from './repositories/RemoteProductCategoryRepository'
@@ -26,6 +27,7 @@ let container: Container = {
     userRepository: new RemoteUserRepository(),
     productRepository: new RemoteProductRepository(),
     imageRepository: new RemoteImageRepository(),
+    //imageRepository: new MockImageRepository(500),
     productCategoryRepository: new RemoteProductCategoryRepository(),
     orderRepository: new RemoteOrderRepository(),
 }

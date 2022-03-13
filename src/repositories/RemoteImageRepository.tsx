@@ -7,8 +7,6 @@ import { IImageRepository } from "./IImageRepository";
 
 export class RemoteImageRepository implements IImageRepository {
     private normalizeImagePath(path: string) : string {
-        console.log('FILESERVER_URL')
-        console.log(FILESERVER_URL)
         if (!path.includes('http')) {
             path = FILESERVER_URL + '/' + path
         }
@@ -17,7 +15,12 @@ export class RemoteImageRepository implements IImageRepository {
 
     async fetchImages(offset: number, limit: number) : Promise<ImageModel[]> {
         try {
-            let response = await axios.get(`${HOST_URL}/images/`)
+            let response = await axios.get(`${HOST_URL}/images/`, {
+                params: {
+                    offset: offset,
+                    limit: limit,
+                }
+            })
             let ret : ImageModel[] = []
             for (let i  = 0; i < response.data.length; i++) {
                 let imageJson = response.data[i]
