@@ -559,7 +559,13 @@ export const ProductDetailPage = ( props : ProductDetailPageProps ) => {
     }
 
     function onProductCategoriesOk() {
-        setProductCategories(productCategories.concat(editingProductCategories))
+        let newCategories = [...productCategories]
+        editingProductCategories.forEach(e => {
+            if (newCategories.findIndex(current => current.category === e.category) === -1) {
+                newCategories.push(e)
+            }
+        })
+        setProductCategories(newCategories)
         setShowCategoryGallery(false)
     }
 
